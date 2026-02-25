@@ -18,7 +18,6 @@ window.addEventListener("scroll", () => {
 
   if (!imageContainer || !img || !section) return;
 
-  // create spotlight element
   const spotlight = document.createElement('div');
   spotlight.className = 'spotlight';
   spotlight.style.left = '50%';
@@ -29,7 +28,6 @@ window.addEventListener("scroll", () => {
 
   function updateMouseEffects(e) {
     const rect = imageContainer.getBoundingClientRect();
-
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
@@ -70,7 +68,6 @@ window.addEventListener("scroll", () => {
     spotlight.style.opacity = '0.5';
   }
 
-  // intersection observer for fade-in
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -80,7 +77,7 @@ window.addEventListener("scroll", () => {
         }
       });
     },
-    { threshold: 0.18, rootMargin: '0px' }
+    { threshold: 0.18 }
   );
   observer.observe(section);
 
@@ -174,7 +171,7 @@ document.querySelectorAll(".header-cta, .hero-cta, .btn, .header-icon a").forEac
   });
 });
 
-// ===== PRICING TOGGLE (consolidated) =====
+// ===== PRICING TOGGLE =====
 document.addEventListener("DOMContentLoaded", () => {
   const toggleButtons = document.querySelectorAll(".pricing-toggle .toggle-btn");
   const categories = document.querySelectorAll(".carousel-category");
@@ -186,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleButtons.forEach(btn => {
       btn.classList.toggle("active", btn.dataset.category === categoryId);
     });
-    // optional: update dynamic island
     morphIsland(`${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Plan`, "fas fa-tag");
   }
 
@@ -197,11 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // set default active (first button or "web")
   const defaultActive = document.querySelector(".toggle-btn.active")?.dataset.category || "web";
   setActiveCategory(defaultActive);
 
-  // optional drag-to-scroll for mouse users
   categories.forEach(carousel => {
     let isDown = false;
     let startX, scrollLeft;
@@ -260,31 +254,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })();
 
-// Force pricing scroll on small screens (fallback)
+// ===== PRICING SCROLL FALLBACK (with logging) =====
 (function() {
   function fixPricingScroll() {
     if (window.innerWidth <= 600) {
       const activeCategory = document.querySelector('.carousel-category.active');
       if (activeCategory) {
-        // Ensure the container can scroll
         activeCategory.style.overflowX = 'auto';
         activeCategory.style.webkitOverflowScrolling = 'touch';
-        // Optional: log to confirm
-        console.log('Pricing scroll fix applied');
+        console.log('✅ Pricing scroll fix applied – active category:', activeCategory.id);
+      } else {
+        console.warn('⚠️ No active pricing category found');
       }
     }
   }
 
-  // Run on load and resize
   window.addEventListener('load', fixPricingScroll);
   window.addEventListener('resize', fixPricingScroll);
 
-  // Also run when the pricing toggle is clicked
-  const toggleButtons = document.querySelectorAll('.pricing-toggle .toggle-btn');
-  toggleButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      setTimeout(fixPricingScroll, 50); // slight delay to allow class change
-    });
+  document.querySelectorAll('.pricing-toggle .toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(fixPricingScroll, 50));
   });
 })();
-
