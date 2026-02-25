@@ -454,6 +454,7 @@ header.scrolled {
 @media screen and (max-width: 1024px) {
   .about { gap: 3rem; padding: 5rem 3rem; }
   .about-content h2 { font-size: 2.6rem; }
+  .services-header { margin-top: -80px; }
 }
 
 @media screen and (max-width: 860px) {
@@ -473,6 +474,7 @@ header.scrolled {
   }
   .about-content p { font-size: 1.1rem; }
   .btn { padding: 0.9rem 2.5rem; }
+  .services-header { margin-top: -40px; }
 }
 
 @media screen and (max-width: 768px) {
@@ -489,9 +491,8 @@ header.scrolled {
     font-size: 0.85rem;
     padding: 0.45rem 0.95rem;
   }
-  .services-header {
-    margin-top: -60px;
-  }
+  .services-header { margin-top: 0; }
+  .about { padding-bottom: 4rem; }
   .dynamic-island {
     top: 8px;
     height: 32px;
@@ -564,6 +565,7 @@ header.scrolled {
   .services {
     padding: 2rem 1rem;
     gap: 1.5rem;
+    margin-top: 2rem;
   }
   .services-header {
     margin-top: 0;
@@ -1335,23 +1337,34 @@ a:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .pricing-carousel {
+    overflow: visible !important;
+  }
   .carousel-category.active {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1.5rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    width: 100%;
-    flex-wrap: nowrap;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 1rem !important;
+    padding: 0.5rem 1rem 1.5rem 1rem !important;
+    margin: 0 !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .carousel-category.active::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
   .pricing-card {
-    flex: 0 0 260px;
-    scroll-snap-align: start;
+    flex: 0 0 260px !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .pricing-card:hover {
+    transform: translateY(-4px);
   }
 }
 
@@ -1952,141 +1965,3 @@ a:focus-visible {
     font-size: 1.3rem;
   }
 }
-
-@media screen and (max-width: 600px) {
-  .pricing-carousel {
-    overflow: visible; /* allow scrolling inside category */
-  }
-  .carousel-category.active {
-    display: flex !important;
-    overflow-x: auto !important;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 1.5rem;
-    scrollbar-width: none;
-    flex-wrap: nowrap;
-  }
-  .carousel-category.active::-webkit-scrollbar {
-    display: none;
-  }
-  .pricing-card {
-    flex: 0 0 260px !important;
-    scroll-snap-align: start;
-    margin-right: 0;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .services-header {
-    margin-top: -80px; /* reduce from -160px */
-  }
-}
-
-@media screen and (max-width: 860px) {
-  .services-header {
-    margin-top: -40px; /* further reduce */
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .services-header {
-    margin-top: 0; /* no overlap on smaller tablets */
-  }
-  .about {
-    padding-bottom: 4rem; /* ensure space before services */
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .services-header {
-    margin-top: 0; /* already set, but keep */
-  }
-}
-
-.services {
-  margin-top: 2rem; /* add spacing after about section */
-}
-
-/* ===== PRICING – HORIZONTAL SCROLL ON SMALL SCREENS (FIX) ===== */
-@media screen and (max-width: 600px) {
-  /* Ensure the outer carousel does NOT clip */
-  .pricing-carousel {
-    overflow: visible !important;
-  }
-
-  /* Force the active category to be a scrollable flex row */
-  .carousel-category.active {
-    display: flex !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 1rem !important;
-    padding-bottom: 1.5rem !important;
-    scrollbar-width: none !important; /* Firefox */
-    flex-wrap: nowrap !important;
-    width: 100% !important;
-  }
-
-  .carousel-category.active::-webkit-scrollbar {
-    display: none !important; /* Chrome/Safari */
-  }
-
-  /* Each card fixed width, no shrinking */
-  .pricing-card {
-    flex: 0 0 260px !important;
-    scroll-snap-align: start !important;
-    margin: 0 !important;
-  }
-}
-@media screen and (max-width: 600px) {
-  .carousel-category {
-    display: flex !important;
-    overflow-x: auto !important;
-  }
-}
-
-/* ===== EMERGENCY FIX: PRICING SCROLL ON SMALL SCREENS ===== */
-@media screen and (max-width: 600px) {
-  /* Disable clipping on the outer wrapper */
-  .pricing-carousel {
-    overflow: visible !important;
-  }
-
-  /* Force every category to be a horizontal scrollable row */
-  .carousel-category {
-    display: none !important; /* Hide by default */
-  }
-  .carousel-category.active {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 1rem !important;
-    padding: 0.5rem 0.5rem 1.5rem 0.5rem !important; /* Add padding to reveal left card */
-    margin: 0 !important;
-    scrollbar-width: none !important; /* Firefox */
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  .carousel-category.active::-webkit-scrollbar {
-    display: none !important;
-  }
-
-  /* Card styling – fixed width, no shrinking */
-  .pricing-card {
-    flex: 0 0 260px !important;
-    scroll-snap-align: start !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Remove any potential left margin/padding that could hide the first card */
-  .pricing-carousel,
-  .pricing-carousel * {
-    box-sizing: border-box;
-  }
-}
-
