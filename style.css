@@ -1952,3 +1952,59 @@ a:focus-visible {
     font-size: 1.3rem;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .pricing-carousel {
+    overflow: visible; /* allow scrolling inside category */
+  }
+  .carousel-category.active {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1.5rem;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .carousel-category.active::-webkit-scrollbar {
+    display: none;
+  }
+  .pricing-card {
+    flex: 0 0 260px !important;
+    scroll-snap-align: start;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .services-header {
+    margin-top: -80px; /* reduce from -160px */
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .services-header {
+    margin-top: -40px; /* further reduce */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .services-header {
+    margin-top: 0; /* no overlap on smaller tablets */
+  }
+  .about {
+    padding-bottom: 4rem; /* ensure space before services */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .services-header {
+    margin-top: 0; /* already set, but keep */
+  }
+}
+
+.services {
+  margin-top: 2rem; /* add spacing after about section */
+}
+
