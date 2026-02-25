@@ -259,3 +259,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 })();
+
+// Force pricing scroll on small screens (fallback)
+(function() {
+  function fixPricingScroll() {
+    if (window.innerWidth <= 600) {
+      const activeCategory = document.querySelector('.carousel-category.active');
+      if (activeCategory) {
+        // Ensure the container can scroll
+        activeCategory.style.overflowX = 'auto';
+        activeCategory.style.webkitOverflowScrolling = 'touch';
+        // Optional: log to confirm
+        console.log('Pricing scroll fix applied');
+      }
+    }
+  }
+
+  // Run on load and resize
+  window.addEventListener('load', fixPricingScroll);
+  window.addEventListener('resize', fixPricingScroll);
+
+  // Also run when the pricing toggle is clicked
+  const toggleButtons = document.querySelectorAll('.pricing-toggle .toggle-btn');
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      setTimeout(fixPricingScroll, 50); // slight delay to allow class change
+    });
+  });
+})();
+
