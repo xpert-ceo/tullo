@@ -2008,3 +2008,34 @@ a:focus-visible {
   margin-top: 2rem; /* add spacing after about section */
 }
 
+/* ===== PRICING – HORIZONTAL SCROLL ON SMALL SCREENS (FIX) ===== */
+@media screen and (max-width: 600px) {
+  /* Ensure the outer carousel does NOT clip */
+  .pricing-carousel {
+    overflow: visible !important;
+  }
+
+  /* Force the active category to be a scrollable flex row */
+  .carousel-category.active {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 1rem !important;
+    padding-bottom: 1.5rem !important;
+    scrollbar-width: none !important; /* Firefox */
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+
+  .carousel-category.active::-webkit-scrollbar {
+    display: none !important; /* Chrome/Safari */
+  }
+
+  /* Each card fixed width, no shrinking */
+  .pricing-card {
+    flex: 0 0 260px !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+}
