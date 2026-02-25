@@ -2039,3 +2039,9 @@ a:focus-visible {
     margin: 0 !important;
   }
 }
+@media screen and (max-width: 600px) {
+  .carousel-category {
+    display: flex !important;
+    overflow-x: auto !important;
+  }
+}
