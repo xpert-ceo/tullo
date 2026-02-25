@@ -20,15 +20,26 @@ body {
   font-weight: 400;
 }
 
+/* =========================================
+   iOS LIQUID GLASS SYSTEM — GLOBAL BASE
+========================================= */
+:root {
+  --glass-blur: 18px;
+  --glass-border: rgba(255,255,255,0.18);
+  --glass-bg: rgba(255,255,255,0.08);
+  --glass-highlight: rgba(255,255,255,0.35);
+  --glass-shadow:
+      0 10px 30px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 -1px 0 rgba(255,255,255,0.06);
+}
+
 /* ---------------------------------------------
-   STICKY HEADER – GLASS MORPHISM
---------------------------------------------- */
-/* ---------------------------------------------
-   RESPONSIVE STICKY HEADER – GLASS MORPHISM
+   STICKY HEADER – GLASS MORPHISM (FULLY RESPONSIVE)
 --------------------------------------------- */
 header {
   position: sticky;
-  top: 80px; /* Default desktop offset */
+  top: 80px;
   z-index: 1000;
   width: 92%;
   max-width: 1200px;
@@ -61,417 +72,145 @@ header.scrolled {
   transition: transform 0.3s ease;
 }
 
-/* ===== RESPONSIVE BREAKPOINTS ===== */
-
-/* Tablet (max-width: 1024px) */
-@media screen and (max-width: 1024px) {
-  header {
-    top: 40px;              /* Lower offset on tablets */
-    width: 90%;
-    height: 60px;
-    border-radius: 18px;
-    padding: 0 1rem;
-  }
-  header.scrolled {
-    width: 85%;
-  }
-  .header-logo {
-    transform: scale(1.8);  /* Slightly smaller logo */
-  }
-}
-
-/* Mobile landscape / small tablets (max-width: 768px) */
-@media screen and (max-width: 768px) {
-  header {
-    top: 20px;               /* Closer to top */
-    width: 94%;
-    height: 56px;
-    border-radius: 16px;
-    padding: 0 0.8rem;
-  }
-  header.scrolled {
-    width: 92%;
-    border-radius: 20px;
-  }
-  .header-logo {
-    transform: scale(1.5);   /* Reduce logo size further */
-    height: 36px;
-  }
-}
-
-/* Mobile portrait (max-width: 480px) */
-@media screen and (max-width: 480px) {
-  header {
-    top: 10px;               /* Almost at the top edge */
-    width: 96%;
-    height: 52px;
-    border-radius: 14px;
-    padding: 0 0.6rem;
-  }
-  header.scrolled {
-    width: 94%;
-    border-radius: 16px;
-  }
-  .header-logo {
-    transform: scale(1.3);   /* Balanced logo size */
-    height: 32px;
-  }
-}
-
-/* Very small devices (max-width: 360px) */
-@media screen and (max-width: 360px) {
-  header {
-    top: 5px;
-    height: 48px;
-    border-radius: 12px;
-    padding: 0 0.5rem;
-  }
-  .header-logo {
-    transform: scale(1.1);
-    height: 28px;
-  }
-}
-
-
-.header-icon i {
-  font-size: 0.95rem;
-}
-
-
-/* =========================================
-   iOS LIQUID GLASS SYSTEM — GLOBAL BASE
-   Used by header icons, CTA buttons, etc.
-========================================= */
-
-:root {
-
-  --glass-blur: 18px;
-  --glass-border: rgba(255,255,255,0.18);
-  --glass-bg: rgba(255,255,255,0.08);
-  --glass-highlight: rgba(255,255,255,0.35);
-  --glass-shadow:
-      0 10px 30px rgba(0,0,0,0.35),
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      inset 0 -1px 0 rgba(255,255,255,0.06);
-
-}
-
-
-/* =========================================
-   HEADER ICON CONTAINER
-========================================= */
-
+/* Header icons */
 .header-icon {
-
   display: flex;
   align-items: center;
   gap: 0.9rem;
-
 }
 
-
-/* =========================================
-   LIQUID GLASS ICON BUTTONS
-========================================= */
-
 .header-icon a {
-
   position: relative;
-
   width: 38px;
   height: 38px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   color: white;
   font-size: 15px;
-
   text-decoration: none;
-
   background: var(--glass-bg);
-
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-
   border: 1px solid var(--glass-border);
-
   box-shadow: var(--glass-shadow);
-
   overflow: hidden;
-
-  transition:
-    transform .45s cubic-bezier(.34,1.56,.64,1),
-    box-shadow .4s ease,
-    background .4s ease;
-
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease, background .4s ease;
 }
 
-
-/* specular reflection */
 .header-icon a::before {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  background:
-    linear-gradient(
-      120deg,
-      rgba(255,255,255,0.4) 0%,
-      rgba(255,255,255,0.15) 30%,
-      transparent 60%
-    );
-
+  background: linear-gradient(120deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 30%, transparent 60%);
   opacity: .7;
-
   pointer-events: none;
-
 }
 
-
-/* liquid diffusion */
 .header-icon a::after {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      rgba(255,255,255,0.4),
-      transparent 45%
-    );
-
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 45%);
   opacity: .5;
-
 }
 
-
-/* hover liquid morph */
 .header-icon a:hover {
-
   transform: scale(1.15);
-
   background: rgba(255,255,255,0.16);
-
-  box-shadow:
-
-      0 20px 50px rgba(0,0,0,0.45),
-
-      inset 0 1px 0 rgba(255,255,255,0.35),
-
-      inset 0 -1px 0 rgba(255,255,255,0.1);
-
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(255,255,255,0.1);
 }
 
-
-/* press */
 .header-icon a:active {
-
   transform: scale(.92);
-
 }
 
-
-/* =========================================
-   LIQUID GLASS CTA BASE
-========================================= */
-
-.header-cta,
-.hero-cta,
-.btn {
-
+/* Header CTA */
+.header-cta {
   position: relative;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 0.7rem 1.6rem;
-
   border-radius: 999px;
-
   font-size: 15px;
   font-weight: 600;
-
   text-decoration: none;
-
   color: white;
-
   border: 1px solid var(--glass-border);
-
-  background: var(--glass-bg);
-
+  background: rgba(94,234,212,0.12);
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-
   box-shadow: var(--glass-shadow);
-
   overflow: hidden;
-
   cursor: pointer;
-
-  transition:
-    transform .45s cubic-bezier(.34,1.56,.64,1),
-    box-shadow .45s ease,
-    background .45s ease;
-
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .45s ease, background .45s ease;
 }
 
-
-/* reflection layer */
-.header-cta::before,
-.hero-cta::before,
-.btn::before {
-
+.header-cta::before {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  background:
-    linear-gradient(
-      120deg,
-      rgba(255,255,255,0.45),
-      rgba(255,255,255,0.12),
-      transparent 60%
-    );
-
+  background: linear-gradient(120deg, rgba(255,255,255,0.45), rgba(255,255,255,0.12), transparent 60%);
   opacity: .75;
-
 }
 
-
-/* liquid diffusion */
-.header-cta::after,
-.hero-cta::after,
-.btn::after {
-
+.header-cta::after {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      rgba(255,255,255,0.45),
-      transparent 45%
-    );
-
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45), transparent 45%);
   opacity: .55;
-
 }
 
-
-/* =========================================
-   HERO CTA — KEEP GRADIENT BUT ADD GLASS
-========================================= */
-
-.hero-cta {
-
-  background:
-    linear-gradient(135deg, #7c7cff, #5eead4);
-
-  color: #0b0d12;
-
-  border: 1px solid rgba(255,255,255,0.35);
-
-}
-
-
-/* =========================================
-   HEADER CTA COLOR TINT
-========================================= */
-
-.header-cta {
-
-  background: rgba(94,234,212,0.12);
-
-  border: 1px solid rgba(94,234,212,0.35);
-
-}
-
-
-/* =========================================
-   ABOUT BUTTON GLASS
-========================================= */
-
-.btn {
-
-  background: rgba(31,60,122,0.35);
-
-  border: 1px solid rgba(150,200,255,0.3);
-
-  padding: 0.9rem 2.6rem;
-
-}
-
-
-/* =========================================
-   LIQUID HOVER MORPH
-========================================= */
-
-.header-cta:hover,
-.hero-cta:hover,
-.btn:hover {
-
+.header-cta:hover {
   transform: scale(1.08);
-
   background: rgba(255,255,255,0.18);
-
-  box-shadow:
-
-      0 30px 60px rgba(0,0,0,0.5),
-
-      inset 0 1px 0 rgba(255,255,255,0.45),
-
-      inset 0 -1px 0 rgba(255,255,255,0.15);
-
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(255,255,255,0.15);
 }
 
-
-/* keep hero gradient on hover */
-.hero-cta:hover {
-
-  background:
-    linear-gradient(135deg, #8f8fff, #7cf0dc);
-
-}
-
-
-/* press effect */
-.header-cta:active,
-.hero-cta:active,
-.btn:active {
-
+.header-cta:active {
   transform: scale(.96);
-
-  box-shadow:
-      0 10px 20px rgba(0,0,0,0.35);
-
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
 
+/* ===== RESPONSIVE HEADER BREAKPOINTS ===== */
+@media screen and (max-width: 1024px) {
+  header { top: 40px; width: 90%; height: 60px; }
+  header.scrolled { width: 85%; }
+  .header-logo { transform: scale(1.8); }
+}
 
-/* hero section */
+@media screen and (max-width: 768px) {
+  header { top: 20px; width: 94%; height: 56px; border-radius: 16px; }
+  header.scrolled { width: 92%; border-radius: 20px; }
+  .header-logo { transform: scale(1.5); height: 36px; }
+  .header-cta { font-size: 0.85rem; padding: 0.45rem 0.95rem; }
+}
+
+@media screen and (max-width: 480px) {
+  header { top: 10px; width: 96%; height: 52px; border-radius: 14px; }
+  header.scrolled { width: 94%; border-radius: 16px; }
+  .header-logo { transform: scale(1.3); height: 32px; }
+  .header-icon { gap: 0.6rem; }
+  .header-icon a { width: 32px; height: 32px; }
+}
+
+@media screen and (max-width: 360px) {
+  header { top: 5px; height: 48px; border-radius: 12px; }
+  .header-logo { transform: scale(1.1); height: 28px; }
+}
+
+/* ---------------------------------------------
+   HERO SECTION
+--------------------------------------------- */
 .hero {
   min-height: 100vh;
   width: 100%;
   margin-top: -84px;
   padding-top: 84px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
-    url('./Assets/designbg-1.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('./Assets/designbg-1.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -514,11 +253,34 @@ header.scrolled {
   margin-top: 2.2rem;
   padding: 1rem 2.4rem;
   border-radius: 999px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #0b0d12;
+  background: linear-gradient(135deg, #7c7cff, #5eead4);
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .45s ease;
 }
 
+.hero-cta:hover {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #8f8fff, #7cf0dc);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45);
+}
 
+.hero-cta:active {
+  transform: scale(.96);
+}
 
-/* about section */
+/* ---------------------------------------------
+   ABOUT SECTION
+--------------------------------------------- */
 .about {
   position: relative;
   display: flex;
@@ -531,9 +293,7 @@ header.scrolled {
   background: radial-gradient(circle at 80% 20%, rgba(20, 40, 70, 0.35) 0%, transparent 60%),
               radial-gradient(circle at 10% 70%, rgba(80, 50, 120, 0.2) 0%, transparent 65%),
               linear-gradient(145deg, #0a0f1e 0%, #0b121f 100%);
-  background-blend-mode: overlay, normal, normal;
   border-bottom: 1px solid rgba(75, 130, 255, 0.1);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   isolation: isolate;
   opacity: 0;
   transform: translateY(30px);
@@ -545,7 +305,6 @@ header.scrolled {
   transform: translateY(0);
 }
 
-/* Grain texture */
 .about::before {
   content: '';
   position: absolute;
@@ -559,7 +318,6 @@ header.scrolled {
   z-index: 1;
 }
 
-/* Radial depth layers */
 .about::after {
   content: '';
   position: absolute;
@@ -570,15 +328,11 @@ header.scrolled {
   z-index: 1;
 }
 
-.about-content,
-.about-image {
-  position: relative;
-  z-index: 5;
-}
-
 .about-content {
   flex: 1.1;
   max-width: 620px;
+  position: relative;
+  z-index: 5;
 }
 
 .about-content h2 {
@@ -591,7 +345,6 @@ header.scrolled {
   background-clip: text;
   color: transparent;
   margin-bottom: 1.8rem;
-  text-shadow: 0 2px 5px rgba(0, 20, 50, 0.3);
 }
 
 .about-content p {
@@ -599,12 +352,9 @@ header.scrolled {
   line-height: 1.7;
   color: rgba(210, 230, 255, 0.8);
   margin-bottom: 2.2rem;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   font-weight: 350;
-  letter-spacing: 0.01em;
 }
 
-/* ---------- Image container – 3D tilt + glass ---------- */
 .about-image {
   flex: 1;
   position: relative;
@@ -620,6 +370,7 @@ header.scrolled {
   box-shadow: 0 30px 40px -25px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05) inset;
   background: radial-gradient(circle at 30% 50%, rgba(30, 120, 210, 0.08) 0%, transparent 70%);
   backdrop-filter: blur(2px);
+  z-index: 5;
 }
 
 .about-image img {
@@ -632,21 +383,15 @@ header.scrolled {
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: 0 0 30px 2px rgba(25, 150, 255, 0.2), 0 10px 25px -10px black;
   border: 1px solid rgba(255,255,255,0.08);
-  background: linear-gradient(145deg, #0f1820, #0b121c);
   z-index: 2;
 }
 
-/* Spotlight overlay – cursor‑follow */
 .spotlight {
   position: absolute;
   width: 380px;
   height: 380px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%,
-    rgba(155, 220, 255, 0.2) 0%,
-    rgba(130, 200, 255, 0.1) 30%,
-    rgba(60, 140, 220, 0.03) 60%,
-    transparent 85%);
+  background: radial-gradient(circle at 50% 50%, rgba(155, 220, 255, 0.2) 0%, rgba(130, 200, 255, 0.1) 30%, rgba(60, 140, 220, 0.03) 60%, transparent 85%);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 20;
@@ -657,158 +402,92 @@ header.scrolled {
   opacity: 0.9;
 }
 
-/* Permanent soft glow */
-.about-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  box-shadow: 0 0 40px 8px rgba(40, 130, 255, 0.13) inset, 0 0 30px 6px rgba(0,180,255,0.1);
-  pointer-events: none;
-  z-index: 15;
-  border: 1px solid rgba(255,255,255,0.06);
+/* About button */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2.6rem;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  border: 1px solid rgba(150,200,255,0.3);
+  background: rgba(31,60,122,0.35);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .45s ease, background .45s ease;
 }
 
-/* ---------------------------------------------
-   RESPONSIVE BREAKPOINTS – FINE‑TUNED
---------------------------------------------- */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0.45), rgba(255,255,255,0.12), transparent 60%);
+  opacity: .75;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45), transparent 45%);
+  opacity: .55;
+}
+
+.btn:hover {
+  transform: scale(1.08);
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+.btn:active {
+  transform: scale(.96);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+
+/* About responsive */
 @media screen and (max-width: 1024px) {
   .about { gap: 3rem; padding: 5rem 3rem; }
-  .about-content h2 { font-size: 2.6rem; }
 }
 
 @media screen and (max-width: 860px) {
-  .about {
-    flex-direction: column;
-    padding: 4rem 2rem;
-    gap: 3rem;
-  }
-  .about-image {
-    order: -1;
-    max-width: 560px;
-    width: 100%;
-  }
-  .about-content {
-    max-width: 100%;
-    text-align: center;
-  }
+  .about { flex-direction: column; padding: 4rem 2rem; gap: 3rem; }
+  .about-image { order: -1; max-width: 560px; width: 100%; }
+  .about-content { max-width: 100%; text-align: center; }
   .about-content p { font-size: 1.1rem; }
-  .btn { padding: 0.9rem 2.5rem; }
-}
-
-@media screen and (max-width: 768px) {
-  header {
-    height: 58px;
-    width: 94%;
-  }
-  header.scrolled { width: 90%; }
-  .header-logo {
-    height: 34px;
-    transform: scale(1.1);
-  }
-  .header-cta {
-    font-size: 0.85rem;
-    padding: 0.45rem 0.95rem;
-  }
 }
 
 @media screen and (max-width: 480px) {
-  header {
-    top: 12px;
-    height: 54px;
-  }
-  .header-logo {
-    height: 30px;
-    transform: scale(1);
-  }
-  .header-icon { gap: 0.6rem; }
-  .header-icon a {
-    width: 32px;
-    height: 32px;
-  }
-  .header-icon i { font-size: 0.85rem; }
-
-  .hero {
-    margin-top: -66px;
-    padding-top: 66px;
-    transform: translateY(-2vh);
-  }
-  .hero-h1 { font-size: 2rem; }
-  .hero-cta {
-    padding: 0.9rem 2rem;
-    font-size: 0.95rem;
-  }
-
   .about { padding: 3.5rem 1.8rem; }
   .about-content h2 { font-size: 2.1rem; }
   .about-content p { font-size: 1rem; }
-  .spotlight {
-    width: 260px;
-    height: 260px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .about { padding: 7rem 4rem; }
-}
-
-/* ---------------------------------------------
-   EXTRA FINETUNING – POLISH
---------------------------------------------- */
-.btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 24px -10px rgba(0, 180, 255, 0.4);
-}
-
-body > *:first-child {
-  margin-top: 0;
-}
-
-/* Smooth focus outline for accessibility */
-a:focus-visible {
-  outline: 2px solid rgba(124, 124, 255, 0.8);
-  outline-offset: 4px;
-  border-radius: 40px;
-}
-
-/* Remove animation on reduced motion */
-@media (prefers-reduced-motion) {
-  .hero-cta {
-    animation: none;
-  }
-  .about,
-  .header-cta,
-  .hero-cta,
-  .btn,
-  .header-icon a {
-    transition: none !important;
-  }
+  .spotlight { width: 260px; height: 260px; }
 }
 
 /* =============================================
    SERVICES SECTION – PREMIUM iOS BUBBLE DROPDOWN
-   Prisma dark, glass, interactive collapsible cards
-   Best section of the website ✦
 ============================================= */
 .services {
   position: relative;
   max-width: 1400px;
   margin: 0 auto;
   padding: 6rem 4rem;
-  
-  /* Deep gradient foundation – same as about */
   background: 
     radial-gradient(circle at 85% 15%, rgba(124, 124, 255, 0.08) 0%, transparent 60%),
     radial-gradient(circle at 10% 80%, rgba(94, 234, 212, 0.05) 0%, transparent 65%),
     linear-gradient(145deg, #0a0f1e 0%, #0b121f 100%);
-  
   isolation: isolate;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2.5rem;
 }
 
-/* ---------- Grain overlay ---------- */
 .services::before {
   content: '';
   position: absolute;
@@ -822,26 +501,18 @@ a:focus-visible {
   z-index: 1;
 }
 
-/* ---------- Depth radials ---------- */
 .services::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(ellipse at 70% 30%, rgba(124, 124, 255, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 80%, rgba(94, 234, 212, 0.04) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 70% 30%, rgba(124, 124, 255, 0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 20% 80%, rgba(94, 234, 212, 0.04) 0%, transparent 60%);
   pointer-events: none;
   z-index: 1;
 }
 
-.services > * {
-  position: relative;
-  z-index: 10;
-}
+.services > * { position: relative; z-index: 10; }
 
-/* =============================================
-   HEADER – spans full width
-============================================= */
 .services-header {
   grid-column: span 2;
   text-align: center;
@@ -864,10 +535,8 @@ a:focus-visible {
   margin-bottom: 1rem;
   position: relative;
   display: inline-block;
-  
 }
 
-/* Premium brush underline – thinner, elegant blur */
 .services-header h2::after {
   content: '';
   position: absolute;
@@ -890,13 +559,9 @@ a:focus-visible {
   margin-top: 0.5rem;
 }
 
-/* =============================================
-   SERVICE CARDS – iOS 26 bubble glass
-   with collapsible dropdown (ios style)
-============================================= */
 .service-card {
   position: relative;
-  padding: 2rem 1.8rem 1.8rem 1.8rem;
+  padding: 2rem 1.8rem 1.8rem;
   border-radius: 28px;
   background: rgba(20, 30, 45, 0.5);
   backdrop-filter: blur(16px);
@@ -907,9 +572,28 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  opacity: 0;
+  animation: cardRise 0.7s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
 }
 
-/* Inner glow – permanent */
+.service-card:nth-child(2) { animation-delay: 0.1s; }
+.service-card:nth-child(3) { animation-delay: 0.2s; }
+.service-card:nth-child(4) { animation-delay: 0.3s; }
+.service-card:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes cardRise {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 124, 255, 0.4);
+  background: rgba(30, 45, 65, 0.6);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 30px rgba(124, 124, 255, 0.3);
+}
+
 .service-card::after {
   content: '';
   position: absolute;
@@ -919,19 +603,6 @@ a:focus-visible {
   pointer-events: none;
 }
 
-/* Hover – lift + bubble */
-.service-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(124, 124, 255, 0.4);
-  background: rgba(30, 45, 65, 0.6);
-  backdrop-filter: blur(20px);
-  box-shadow: 
-    0 25px 45px -12px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 0 30px rgba(124, 124, 255, 0.3);
-}
-
-/* ---------- Decorative orb ---------- */
 .service-card::before {
   content: '';
   position: absolute;
@@ -951,7 +622,6 @@ a:focus-visible {
   transform: scale(1.2);
 }
 
-/* ---------- Icon / emoji ---------- */
 .service-icon {
   width: 56px;
   height: 56px;
@@ -973,7 +643,6 @@ a:focus-visible {
   transform: scale(1.05) translateY(-2px);
 }
 
-/* ---------- Title & short description ---------- */
 .service-card h3 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -987,15 +656,13 @@ a:focus-visible {
   color: rgba(210, 230, 255, 0.8);
   line-height: 1.6;
   margin-bottom: 1rem;
-  /* limit to 3 lines – clean minimal */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* ========== DROPDOWN (iOS STYLE) ========== */
-/* Details/summary – native, but we style it beautifully */
+/* Details dropdown */
 .service-card details {
   margin-top: 0.8rem;
   width: 100%;
@@ -1016,12 +683,8 @@ a:focus-visible {
   margin-top: 0.2rem;
 }
 
-/* Remove default triangle (webkit) */
-.service-card summary::-webkit-details-marker {
-  display: none;
-}
+.service-card summary::-webkit-details-marker { display: none; }
 
-/* Custom chevron (iOS style) */
 .service-card summary::after {
   content: '▼';
   font-size: 0.75rem;
@@ -1034,11 +697,8 @@ a:focus-visible {
   transform: rotate(180deg);
 }
 
-.service-card summary:hover {
-  color: #ffffff;
-}
+.service-card summary:hover { color: #ffffff; }
 
-/* Dropdown content – features list */
 .service-card .feature-list {
   margin: 0.8rem 0 0.5rem 0.2rem;
   padding-left: 0.8rem;
@@ -1055,7 +715,6 @@ a:focus-visible {
   gap: 0.5rem;
 }
 
-/* Custom bullet (iOS checkmark style) */
 .service-card .feature-list li::before {
   content: '✓';
   color: #5eead4;
@@ -1064,13 +723,11 @@ a:focus-visible {
   font-size: 0.9rem;
 }
 
-/* Dropdown animation */
 @keyframes slideDown {
   0% { opacity: 0; transform: translateY(-10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Card CTA (optional) ---------- */
 .service-card .btn {
   align-self: flex-start;
   margin-top: 1.2rem;
@@ -1089,22 +746,14 @@ a:focus-visible {
   gap: 0.4rem;
 }
 
-/* iOS bubble hover (global CTA style) */
 .service-card .btn:hover {
   transform: translateY(-3px) scale(1.02);
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px);
-  box-shadow: 
-    0 20px 40px -8px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
-    0 0 20px rgba(124, 124, 255, 0.3);
-  color: white;
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 0 20px rgba(124, 124, 255, 0.3);
 }
 
-/* =============================================
-   BRAND IMPACT – full width, premium closing
-============================================= */
 .brand-impact {
   grid-column: span 2;
   text-align: center;
@@ -1115,6 +764,7 @@ a:focus-visible {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.4s;
+  animation: softFloat 6s infinite ease-in-out;
 }
 
 .brand-impact:hover {
@@ -1140,249 +790,36 @@ a:focus-visible {
   letter-spacing: 0.01em;
 }
 
-/* =============================================
-   RESPONSIVE – flawless spacing
-============================================= */
-@media screen and (max-width: 980px) {
-  .services {
-    grid-template-columns: 1fr;
-    padding: 4rem 2rem;
-    gap: 2rem;
-  }
-
-  .services-header,
-  .brand-impact {
-    grid-column: span 1;
-  }
-
-  .services-header {
-    margin-bottom: 1rem;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .services {
-    padding: 3rem 1.5rem;
-    gap: 1.8rem;
-  }
-
-  .service-card {
-    padding: 1.8rem 1.5rem;
-  }
-
-  .service-card h3 {
-    font-size: 1.3rem;
-  }
-
-  .services-header h2 {
-    font-size: 2rem;
-  }
-
-  .services-header p {
-    font-size: 1rem;
-  }
-
-  .brand-impact {
-    padding: 2rem 1.2rem;
-  }
-
-  .brand-impact h2 {
-    font-size: 1.6rem;
-  }
-}
-
-/* =============================================
-   MICRO-INTERACTIONS & VISUAL ENTERTAINMENT
-============================================= */
-/* Card entrance stagger */
-.service-card {
-  opacity: 0;
-  animation: cardRise 0.7s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
-}
-
-.service-card:nth-child(2) { animation-delay: 0.1s; }
-.service-card:nth-child(3) { animation-delay: 0.2s; }
-.service-card:nth-child(4) { animation-delay: 0.3s; }
-.service-card:nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes cardRise {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Gentle floating on brand-impact */
 @keyframes softFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 }
 
-.brand-impact {
-  animation: softFloat 6s infinite ease-in-out;
+/* Services responsive */
+@media screen and (max-width: 980px) {
+  .services { grid-template-columns: 1fr; padding: 4rem 2rem; gap: 2rem; }
+  .services-header, .brand-impact { grid-column: span 1; }
+  .services-header { margin-bottom: 1rem; }
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion) {
-  .service-card,
-  .brand-impact,
-  .service-card:hover,
-  .btn:hover {
-    animation: none !important;
-    transition: none !important;
-  }
+@media screen and (max-width: 640px) {
+  .services { padding: 3rem 1.5rem; gap: 1.8rem; }
+  .service-card { padding: 1.8rem 1.5rem; }
+  .service-card h3 { font-size: 1.3rem; }
+  .services-header h2 { font-size: 2rem; }
+  .services-header p { font-size: 1rem; }
+  .brand-impact { padding: 2rem 1.2rem; }
+  .brand-impact h2 { font-size: 1.6rem; }
 }
-
-/* =============================================
-   TYPOGRAPHY CONSISTENCY – Inter
-============================================= */
-.service-card,
-.services-header,
-.brand-impact {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-/* Remove any unwanted stacking issues */
-.services .service-card details,
-.services .service-card p,
-.services .service-card .btn {
-  position: relative;
-  z-index: 15;
-}
-
-/* ---------- iOS style disclosure (dropdown) refinement ---------- */
-.service-card details[open] .feature-list {
-  margin-bottom: 0.5rem;
-}
-
-/* polish for very small screens */
-@media (max-width: 480px) {
-  .service-card .feature-list li {
-    font-size: 0.88rem;
-  }
-  .service-card summary {
-    font-size: 0.9rem;
-  }
-}
-
-/* ======================================
-   iOS STYLE DYNAMIC ISLAND
-====================================== */
-
-.dynamic-island {
-
-    position: fixed;
-
-    top: 15px;
-
-    left: 50%;
-
-    transform: translateX(-50%) scale(1);
-
-    z-index: 10000;
-
-    height: 38px;
-
-    width: 120px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: rgba(0,0,0,0.88);
-
-    backdrop-filter: blur(24px);
-
-    border-radius: 50px;
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    transition:
-        width 1.45s cubic-bezier(.34,1.56,.64,1),
-        transform 1.35s cubic-bezier(.34,1.56,.64,1),
-        border-radius 1.35s ease,
-        background 1.3s ease;
-
-}
-
-
-/* Morph expand */
-.dynamic-island.expand {
-
-    width: 240px;
-
-    border-radius: 20px;
-
-    transform: translateX(-50%) scale(1.03);
-
-}
-
-
-/* Morph compress */
-.dynamic-island.compress {
-
-    width: 140px;
-
-}
-
-
-/* container */
-.di-container {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-}
-
-
-/* icon */
-.di-status {
-
-    font-size: 10px;
-
-    color: #00ffa3;
-
-    animation: pulse 2s infinite;
-
-}
-
-
-/* text */
-.di-label {
-
-    color: white;
-
-    font-size: 13px;
-
-    font-weight: 500;
-
-    opacity: .9;
-
-}
-
-
-/* pulse */
-@keyframes pulse {
-
-    0% {opacity:.4; transform:scale(.8);}
-    50% {opacity:1; transform:scale(1.2);}
-    100% {opacity:.4; transform:scale(.8);}
-
-}
-
 
 /* =========================
-   PRICING SECTION – iOS LIQUID GLASS STYLE (IMPROVED & RESPONSIVE)
+   PRICING SECTION – FULLY RESPONSIVE
 ========================= */
-
 .pricing {
   max-width: 1400px;
   margin: 0 auto;
   padding: 6rem 2rem;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', sans-serif;
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
   position: relative;
@@ -1400,7 +837,6 @@ a:focus-visible {
   margin-bottom: 2rem;
 }
 
-/* ----- Toggle Pill (glass) ----- */
 .pricing-toggle {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1443,14 +879,12 @@ a:focus-visible {
   transform: translateY(-2px);
 }
 
-/* ----- Carousel Container ----- */
 .pricing-carousel {
   position: relative;
   width: 100%;
-  overflow: hidden; /* hides the non-active categories */
+  overflow: hidden;
 }
 
-/* Category wrapper – only active is displayed */
 .carousel-category {
   display: none;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1465,41 +899,22 @@ a:focus-visible {
   opacity: 1;
 }
 
-/* On larger screens, cards appear as a responsive grid */
+/* Desktop: grid */
 @media (min-width: 1024px) {
   .carousel-category.active {
-    grid-template-columns: repeat(3, 1fr); /* show 3 cards per row */
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* On tablets, allow horizontal swipe if needed */
-@media (max-width: 1023px) and (min-width: 601px) {
+/* Tablet & mobile: horizontal scroll with snap */
+@media (max-width: 1023px) {
   .carousel-category.active {
     display: flex;
     overflow-x: auto;
     gap: 1.5rem;
     scroll-snap-type: x mandatory;
-    padding-bottom: 1.5rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-  }
-  .carousel-category.active::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-  }
-  .pricing-card {
-    flex: 0 0 300px;
-    scroll-snap-align: start;
-  }
-}
-
-/* Mobile: full-width cards with horizontal scroll */
-@media (max-width: 600px) {
-  .carousel-category.active {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1.5rem;
+    padding: 0 1rem 1.5rem 1rem; /* left padding to reveal first card */
+    scroll-padding: 0 1rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -1507,12 +922,20 @@ a:focus-visible {
     display: none;
   }
   .pricing-card {
-    flex: 0 0 260px;
+    flex: 0 0 300px;
     scroll-snap-align: start;
   }
 }
 
-/* ----- Pricing Card (glass) ----- */
+@media (max-width: 600px) {
+  .pricing { padding: 4rem 1rem; }
+  .pricing-toggle { width: 100%; border-radius: 40px; }
+  .toggle-btn { flex: 1 1 auto; padding: 0.6rem 1rem; font-size: 0.9rem; }
+  .pricing-card { flex: 0 0 260px; padding: 1.5rem; border-radius: 2rem; }
+  .pricing-card h3 { font-size: 1.4rem; }
+  .pricing-card .price { font-size: 1.8rem; }
+}
+
 .pricing-card {
   background: rgba(20, 22, 30, 0.35);
   backdrop-filter: blur(16px) saturate(180%);
@@ -1536,7 +959,6 @@ a:focus-visible {
   transform: translateY(-4px);
 }
 
-/* Card content */
 .pricing-card h3 {
   font-size: 1.6rem;
   font-weight: 500;
@@ -1593,42 +1015,14 @@ a:focus-visible {
   margin-top: 0.5rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .pricing {
-    padding: 4rem 1rem;
-  }
-  .pricing-toggle {
-    width: 100%;
-    border-radius: 40px;
-  }
-  .toggle-btn {
-    flex: 1 1 auto;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-  .pricing-card {
-    padding: 1.5rem;
-    border-radius: 2rem;
-  }
-  .pricing-card h3 {
-    font-size: 1.4rem;
-  }
-  .pricing-card .price {
-    font-size: 1.8rem;
-  }
-}
-
-/* ===== TESTIMONIALS SECTION – Prisma iOS Glass + Infinite Marquee ===== */
-/* Include this CSS in your existing stylesheet. */
-
+/* ===== TESTIMONIALS SECTION ===== */
 .testimonials {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.9);
   position: relative;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .testimonials h2 {
@@ -1642,24 +1036,20 @@ a:focus-visible {
   margin-bottom: 3rem;
   text-align: center;
   padding: 0 1rem;
-  position: relative;
   z-index: 5;
 }
 
-/* Optional subtle grid overlay (prisma-like) */
 .testimonials::after {
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background-image: 
-    linear-gradient(rgba(100, 140, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(100, 140, 255, 0.02) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(100, 140, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(100, 140, 255, 0.02) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
   z-index: 1;
 }
 
-/* ----- marquee container (liquid glass backdrop) ----- */
 .testimonials-marquee {
   width: 100%;
   overflow: hidden;
@@ -1669,15 +1059,13 @@ a:focus-visible {
   position: relative;
 }
 
-/* liquid glass undulating background */
 .testimonials-marquee::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(120, 140, 255, 0.2) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255, 180, 240, 0.15) 0%, transparent 40%),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
+  background: radial-gradient(circle at 20% 50%, rgba(120, 140, 255, 0.2) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(255, 180, 240, 0.15) 0%, transparent 40%),
+              repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
   filter: blur(12px) brightness(1.1);
   z-index: 0;
   pointer-events: none;
@@ -1690,7 +1078,6 @@ a:focus-visible {
   100% { opacity: 0.6; transform: scale(0.98) translate(0.8%, -0.3%); filter: blur(12px) brightness(1.1); }
 }
 
-/* ----- track that scrolls infinitely ----- */
 .testimonials-track {
   display: flex;
   gap: 1.5rem;
@@ -1702,17 +1089,15 @@ a:focus-visible {
   padding: 0.5rem 0;
 }
 
-/* pause on hover (ios-like) */
 .testimonials-marquee:hover .testimonials-track {
   animation-play-state: paused;
 }
 
 @keyframes infiniteScroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* moves exactly half (requires duplicate set) */
+  100% { transform: translateX(-50%); }
 }
 
-/* ===== GLASS CARD ===== */
 .testimonial-card {
   width: 320px;
   flex-shrink: 0;
@@ -1724,10 +1109,7 @@ a:focus-visible {
   padding: 2rem 1.8rem;
   color: rgba(255, 255, 255, 0.8);
   transition: all 0.25s ease;
-  box-shadow: 
-    0 20px 40px -20px rgba(0, 0, 0, 0.8),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 0 0 1px rgba(140, 170, 255, 0.1);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 0 0 1px rgba(140, 170, 255, 0.1);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -1736,7 +1118,6 @@ a:focus-visible {
   z-index: 4;
 }
 
-/* extra liquid edge (prisma-like) */
 .testimonial-card::after {
   content: '';
   position: absolute;
@@ -1759,7 +1140,6 @@ a:focus-visible {
   transform: translateY(-4px) scale(1.01);
 }
 
-/* avatar + name */
 .t-n {
   display: flex;
   align-items: center;
@@ -1774,7 +1154,7 @@ a:focus-visible {
   width: 44px;
   height: 44px;
   background: linear-gradient(145deg, #3c4f8c, #26346b);
-  border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%; /* organic shape */
+  border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1796,64 +1176,30 @@ a:focus-visible {
   text-wrap: pretty;
   word-break: break-word;
   margin-top: 0.2rem;
-  position: relative;
   z-index: 2;
 }
 
-/* ===== RESPONSIVE ===== */
+/* Testimonials responsive */
 @media screen and (max-width: 900px) {
-  .testimonial-card {
-    width: 280px;
-    padding: 1.6rem 1.4rem;
-    border-radius: 2rem;
-  }
-  .testimonials-track {
-    gap: 1.2rem;
-  }
+  .testimonial-card { width: 280px; padding: 1.6rem 1.4rem; border-radius: 2rem; }
+  .testimonials-track { gap: 1.2rem; }
 }
 
 @media screen and (max-width: 600px) {
-  .testimonials h2 {
-    margin-bottom: 2rem;
-  }
-  .testimonial-card {
-    width: 260px;
-    padding: 1.5rem 1.2rem;
-    border-radius: 2rem;
-  }
-  .t-avatar {
-    width: 38px;
-    height: 38px;
-    font-size: 1.2rem;
-  }
-  .t-n {
-    font-size: 1rem;
-  }
-  .t-body {
-    font-size: 0.92rem;
-  }
-  .testimonials-track {
-    gap: 1rem;
-    animation-duration: 28s;
-  }
+  .testimonials h2 { margin-bottom: 2rem; }
+  .testimonial-card { width: 260px; padding: 1.5rem 1.2rem; border-radius: 2rem; }
+  .t-avatar { width: 38px; height: 38px; font-size: 1.2rem; }
+  .t-n { font-size: 1rem; }
+  .t-body { font-size: 0.92rem; }
+  .testimonials-track { gap: 1rem; animation-duration: 28s; }
 }
 
 @media screen and (max-width: 380px) {
-  .testimonial-card {
-    width: 220px;
-    padding: 1.2rem 1rem;
-  }
-  .t-avatar {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-  }
+  .testimonial-card { width: 220px; padding: 1.2rem 1rem; }
+  .t-avatar { width: 32px; height: 32px; font-size: 1rem; }
 }
 
-/* ===== CONTACT & FOOTER – Prisma iOS Glass ===== */
-/* Independent – works with existing styles */
-
-/* ----- Contact Section ----- */
+/* ===== CONTACT & FOOTER ===== */
 .contact {
   width: 100%;
   max-width: 1200px;
@@ -1861,7 +1207,7 @@ a:focus-visible {
   padding: 4rem 2rem;
   position: relative;
   z-index: 5;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .contact .section-title {
@@ -1900,7 +1246,6 @@ a:focus-visible {
   margin: 0 auto;
 }
 
-/* ----- Accordion Group (glass card) ----- */
 .contact-group {
   background: rgba(20, 22, 30, 0.35);
   backdrop-filter: blur(16px) saturate(180%);
@@ -1918,7 +1263,6 @@ a:focus-visible {
   box-shadow: 0 25px 40px -20px #3a4f9f, 0 0 0 1px rgba(160, 190, 255, 0.3);
 }
 
-/* header button */
 .contact-header {
   width: 100%;
   display: flex;
@@ -1951,12 +1295,10 @@ a:focus-visible {
   transition: transform 0.3s ease;
 }
 
-/* rotate chevron when open */
 .contact-group.open .contact-header i {
   transform: rotate(180deg);
 }
 
-/* expanded links area */
 .contact-links {
   max-height: 0;
   opacity: 0;
@@ -1968,13 +1310,12 @@ a:focus-visible {
 }
 
 .contact-group.open .contact-links {
-  max-height: 250px; /* plenty for content */
+  max-height: 250px;
   opacity: 1;
   padding: 1.5rem 2rem 2rem 2rem;
   border-top-color: rgba(140, 170, 255, 0.2);
 }
 
-/* contact button inside */
 .contact-btn {
   display: inline-block;
   padding: 0.9rem 2rem;
@@ -1994,16 +1335,19 @@ a:focus-visible {
   overflow: hidden;
 }
 
-/* brand-specific gradients */
 .contact-btn.whatsapp {
   background: linear-gradient(145deg, #25D36680, #128C7E80), rgba(0,0,0,0.2);
-  background-origin: border-box;
   border-color: #25D36640;
 }
 
 .contact-btn.telegram {
   background: linear-gradient(145deg, #0088cc80, #005f8c80), rgba(0,0,0,0.2);
   border-color: #0088cc40;
+}
+
+.contact-btn.email {
+  background: linear-gradient(145deg, #ea433580, #c5221f80), rgba(0,0,0,0.2);
+  border-color: #ea433540;
 }
 
 .contact-btn:hover {
@@ -2037,7 +1381,6 @@ a:focus-visible {
   font-style: italic;
 }
 
-/* ----- Footer ----- */
 .footer {
   max-width: 1200px;
   margin: 0 auto;
@@ -2105,33 +1448,20 @@ a:focus-visible {
   letter-spacing: 0.5px;
 }
 
-/* ----- Responsive adjustments ----- */
 @media screen and (max-width: 600px) {
-  .contact {
-    padding: 3rem 1.5rem;
-  }
-  .contact .contact-subtitle {
-    font-size: 1rem;
-    padding: 0.8rem 1.5rem;
-  }
-  .contact-header {
-    font-size: 1.3rem;
-    padding: 1.2rem 1.5rem;
-  }
-  .contact-links {
-    padding: 0 1.5rem;
-  }
-  .contact-group.open .contact-links {
-    padding: 1.2rem 1.5rem 1.8rem;
-  }
-  .contact-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-  }
-  .footer-icon a {
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
-  }
+  .contact { padding: 3rem 1.5rem; }
+  .contact .contact-subtitle { font-size: 1rem; padding: 0.8rem 1.5rem; }
+  .contact-header { font-size: 1.3rem; padding: 1.2rem 1.5rem; }
+  .contact-links { padding: 0 1.5rem; }
+  .contact-group.open .contact-links { padding: 1.2rem 1.5rem 1.8rem; }
+  .contact-btn { padding: 0.75rem 1.5rem; font-size: 1rem; }
+  .footer-icon a { width: 44px; height: 44px; font-size: 1.3rem; }
+}
 
+/* Reduced motion */
+@media (prefers-reduced-motion) {
+  .hero-cta, .about, .service-card, .brand-impact, .testimonials-track, .contact-btn, .btn, .header-cta, .header-icon a {
+    animation: none !important;
+    transition: none !important;
+  }
 }
