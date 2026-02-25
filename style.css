@@ -14,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  background: #070c14; /* unified deep navy */
+  background: #070c14;
   color: rgba(235, 245, 255, 0.92);
   line-height: 1.6;
   font-weight: 400;
@@ -57,21 +57,14 @@ header.scrolled {
   transform-origin: left center;
 }
 
-
-
-
 .header-icon i {
   font-size: 0.95rem;
 }
 
-
 /* =========================================
    iOS LIQUID GLASS SYSTEM — GLOBAL BASE
-   Used by header icons, CTA buttons, etc.
 ========================================= */
-
 :root {
-
   --glass-blur: 18px;
   --glass-border: rgba(255,255,255,0.18);
   --glass-bg: rgba(255,255,255,0.08);
@@ -80,73 +73,47 @@ header.scrolled {
       0 10px 30px rgba(0,0,0,0.35),
       inset 0 1px 0 rgba(255,255,255,0.25),
       inset 0 -1px 0 rgba(255,255,255,0.06);
-
 }
-
 
 /* =========================================
    HEADER ICON CONTAINER
 ========================================= */
-
 .header-icon {
-
   display: flex;
   align-items: center;
   gap: 0.9rem;
-
 }
-
 
 /* =========================================
    LIQUID GLASS ICON BUTTONS
 ========================================= */
-
 .header-icon a {
-
   position: relative;
-
   width: 38px;
   height: 38px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   color: white;
   font-size: 15px;
-
   text-decoration: none;
-
   background: var(--glass-bg);
-
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-
   border: 1px solid var(--glass-border);
-
   box-shadow: var(--glass-shadow);
-
   overflow: hidden;
-
   transition:
     transform .45s cubic-bezier(.34,1.56,.64,1),
     box-shadow .4s ease,
     background .4s ease;
-
 }
 
-
-/* specular reflection */
 .header-icon a::before {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
     linear-gradient(
       120deg,
@@ -154,118 +121,71 @@ header.scrolled {
       rgba(255,255,255,0.15) 30%,
       transparent 60%
     );
-
   opacity: .7;
-
   pointer-events: none;
-
 }
 
-
-/* liquid diffusion */
 .header-icon a::after {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
     radial-gradient(
       circle at 30% 20%,
       rgba(255,255,255,0.4),
       transparent 45%
     );
-
   opacity: .5;
-
 }
 
-
-/* hover liquid morph */
 .header-icon a:hover {
-
   transform: scale(1.15);
-
   background: rgba(255,255,255,0.16);
-
   box-shadow:
-
       0 20px 50px rgba(0,0,0,0.45),
-
       inset 0 1px 0 rgba(255,255,255,0.35),
-
       inset 0 -1px 0 rgba(255,255,255,0.1);
-
 }
 
-
-/* press */
 .header-icon a:active {
-
   transform: scale(.92);
-
 }
-
 
 /* =========================================
    LIQUID GLASS CTA BASE
 ========================================= */
-
 .header-cta,
 .hero-cta,
 .btn {
-
   position: relative;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 0.7rem 1.6rem;
-
   border-radius: 999px;
-
   font-size: 15px;
   font-weight: 600;
-
   text-decoration: none;
-
   color: white;
-
   border: 1px solid var(--glass-border);
-
   background: var(--glass-bg);
-
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-
   box-shadow: var(--glass-shadow);
-
   overflow: hidden;
-
   cursor: pointer;
-
   transition:
     transform .45s cubic-bezier(.34,1.56,.64,1),
     box-shadow .45s ease,
     background .45s ease;
-
 }
 
-
-/* reflection layer */
 .header-cta::before,
 .hero-cta::before,
 .btn::before {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
     linear-gradient(
       120deg,
@@ -273,123 +193,62 @@ header.scrolled {
       rgba(255,255,255,0.12),
       transparent 60%
     );
-
   opacity: .75;
-
 }
 
-
-/* liquid diffusion */
 .header-cta::after,
 .hero-cta::after,
 .btn::after {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
     radial-gradient(
       circle at 30% 20%,
       rgba(255,255,255,0.45),
       transparent 45%
     );
-
   opacity: .55;
-
 }
-
-
-/* =========================================
-   HERO CTA — KEEP GRADIENT BUT ADD GLASS
-========================================= */
 
 .hero-cta {
-
-  background:
-    linear-gradient(135deg, #7c7cff, #5eead4);
-
+  background: linear-gradient(135deg, #7c7cff, #5eead4);
   color: #0b0d12;
-
   border: 1px solid rgba(255,255,255,0.35);
-
 }
-
-
-/* =========================================
-   HEADER CTA COLOR TINT
-========================================= */
 
 .header-cta {
-
   background: rgba(94,234,212,0.12);
-
   border: 1px solid rgba(94,234,212,0.35);
-
 }
-
-
-/* =========================================
-   ABOUT BUTTON GLASS
-========================================= */
 
 .btn {
-
   background: rgba(31,60,122,0.35);
-
   border: 1px solid rgba(150,200,255,0.3);
-
   padding: 0.9rem 2.6rem;
-
 }
-
-
-/* =========================================
-   LIQUID HOVER MORPH
-========================================= */
 
 .header-cta:hover,
 .hero-cta:hover,
 .btn:hover {
-
   transform: scale(1.08);
-
   background: rgba(255,255,255,0.18);
-
   box-shadow:
-
       0 30px 60px rgba(0,0,0,0.5),
-
       inset 0 1px 0 rgba(255,255,255,0.45),
-
       inset 0 -1px 0 rgba(255,255,255,0.15);
-
 }
 
-
-/* keep hero gradient on hover */
 .hero-cta:hover {
-
-  background:
-    linear-gradient(135deg, #8f8fff, #7cf0dc);
-
+  background: linear-gradient(135deg, #8f8fff, #7cf0dc);
 }
 
-
-/* press effect */
 .header-cta:active,
 .hero-cta:active,
 .btn:active {
-
   transform: scale(.96);
-
-  box-shadow:
-      0 10px 20px rgba(0,0,0,0.35);
-
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
-
 
 /* hero section */
 .hero {
@@ -443,8 +302,6 @@ header.scrolled {
   border-radius: 999px;
 }
 
-
-
 /* about section */
 .about {
   position: relative;
@@ -472,7 +329,6 @@ header.scrolled {
   transform: translateY(0);
 }
 
-/* Grain texture */
 .about::before {
   content: '';
   position: absolute;
@@ -486,7 +342,6 @@ header.scrolled {
   z-index: 1;
 }
 
-/* Radial depth layers */
 .about::after {
   content: '';
   position: absolute;
@@ -531,7 +386,6 @@ header.scrolled {
   letter-spacing: 0.01em;
 }
 
-/* ---------- Image container – 3D tilt + glass ---------- */
 .about-image {
   flex: 1;
   position: relative;
@@ -563,7 +417,6 @@ header.scrolled {
   z-index: 2;
 }
 
-/* Spotlight overlay – cursor‑follow */
 .spotlight {
   position: absolute;
   width: 380px;
@@ -584,7 +437,6 @@ header.scrolled {
   opacity: 0.9;
 }
 
-/* Permanent soft glow */
 .about-image::after {
   content: '';
   position: absolute;
@@ -637,41 +489,226 @@ header.scrolled {
     font-size: 0.85rem;
     padding: 0.45rem 0.95rem;
   }
+  .services-header {
+    margin-top: -60px;
+  }
+  .dynamic-island {
+    top: 8px;
+    height: 32px;
+    width: 100px;
+  }
+  .dynamic-island.expand {
+    width: 200px;
+  }
+  .di-label {
+    font-size: 11px;
+  }
+  .di-status {
+    font-size: 8px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   header {
-    top: 12px;
-    height: 54px;
+    top: 40px;
+    height: 50px;
+    padding: 0 0.8rem;
   }
   .header-logo {
-    height: 30px;
+    height: 26px;
     transform: scale(1);
   }
-  .header-icon { gap: 0.6rem; }
+  .header-icon {
+    gap: 0.6rem;
+  }
   .header-icon a {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
-  .header-icon i { font-size: 0.85rem; }
-
+  .header-cta {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
   .hero {
-    margin-top: -66px;
-    padding-top: 66px;
-    transform: translateY(-2vh);
+    margin-top: -60px;
+    padding-top: 60px;
+    min-height: 90vh;
   }
-  .hero-h1 { font-size: 2rem; }
+  .hero-h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+  .hero-sub {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
   .hero-cta {
-    padding: 0.9rem 2rem;
+    padding: 0.8rem 1.8rem;
+    font-size: 0.9rem;
+  }
+  .about {
+    padding: 2.5rem 1.2rem;
+    gap: 2rem;
+  }
+  .about-content h2 {
+    font-size: 1.8rem;
+  }
+  .about-content p {
     font-size: 0.95rem;
   }
-
-  .about { padding: 3.5rem 1.8rem; }
-  .about-content h2 { font-size: 2.1rem; }
-  .about-content p { font-size: 1rem; }
-  .spotlight {
-    width: 260px;
-    height: 260px;
+  .btn {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+  }
+  .services {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
+  .services-header {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .services-header h2 {
+    font-size: 1.8rem;
+  }
+  .services-header h2::after {
+    width: 50%;
+    bottom: -5px;
+  }
+  .services-header p {
+    font-size: 0.9rem;
+  }
+  .service-card {
+    padding: 1.5rem 1.2rem;
+  }
+  .service-card h3 {
+    font-size: 1.2rem;
+  }
+  .service-card > p {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 4;
+  }
+  .service-card summary {
+    font-size: 0.85rem;
+  }
+  .service-card .feature-list li {
+    font-size: 0.85rem;
+  }
+  .brand-impact {
+    padding: 1.5rem 1rem;
+  }
+  .brand-impact h2 {
+    font-size: 1.4rem;
+  }
+  .brand-impact .closing-statement {
+    font-size: 1rem;
+  }
+  .pricing {
+    padding: 3rem 0.5rem;
+  }
+  .pricing h2 {
+    font-size: 2rem;
+  }
+  .pricing-toggle {
+    width: 100%;
+    border-radius: 40px;
+    padding: 0.3rem;
+  }
+  .toggle-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    flex: 1 0 auto;
+  }
+  .pricing-card {
+    padding: 1.2rem 1rem;
+    border-radius: 1.5rem;
+  }
+  .pricing-card h3 {
+    font-size: 1.2rem;
+  }
+  .pricing-card .price {
+    font-size: 1.5rem;
+  }
+  .pricing-card .features li {
+    font-size: 0.85rem;
+  }
+  .testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  .testimonial-card {
+    width: 240px;
+    padding: 1.3rem 1rem;
+    border-radius: 1.8rem;
+  }
+  .t-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  .t-n {
+    font-size: 0.95rem;
+  }
+  .t-body {
+    font-size: 0.85rem;
+  }
+  .contact {
+    padding: 2rem 1rem;
+  }
+  .contact .section-title {
+    font-size: 2rem;
+  }
+  .contact .contact-subtitle {
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .contact-header {
+    font-size: 1.1rem;
+    padding: 1rem 1.2rem;
+  }
+  .contact-links {
+    padding: 0 1.2rem;
+  }
+  .contact-group.open .contact-links {
+    padding: 1rem 1.2rem 1.5rem;
+  }
+  .contact-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  .trust-note {
+    font-size: 0.8rem;
+  }
+  .footer {
+    padding: 1.5rem 1rem 2rem;
+    border-radius: 2rem 2rem 0 0;
+  }
+  .footer-logo {
+    max-width: 120px;
+  }
+  .footer-icon a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  .footer-text {
+    font-size: 0.9rem;
+  }
+  .footer-copy {
+    font-size: 0.8rem;
+  }
+  .dynamic-island {
+    top: 5px;
+    height: 28px;
+    width: 90px;
+  }
+  .dynamic-island.expand {
+    width: 180px;
+  }
+  .di-label {
+    font-size: 10px;
   }
 }
 
@@ -691,14 +728,12 @@ body > *:first-child {
   margin-top: 0;
 }
 
-/* Smooth focus outline for accessibility */
 a:focus-visible {
   outline: 2px solid rgba(124, 124, 255, 0.8);
   outline-offset: 4px;
   border-radius: 40px;
 }
 
-/* Remove animation on reduced motion */
 @media (prefers-reduced-motion) {
   .hero-cta {
     animation: none;
@@ -714,28 +749,22 @@ a:focus-visible {
 
 /* =============================================
    SERVICES SECTION – PREMIUM iOS BUBBLE DROPDOWN
-   Prisma dark, glass, interactive collapsible cards
-   Best section of the website ✦
 ============================================= */
 .services {
   position: relative;
   max-width: 1400px;
   margin: 0 auto;
   padding: 6rem 4rem;
-  
-  /* Deep gradient foundation – same as about */
   background: 
     radial-gradient(circle at 85% 15%, rgba(124, 124, 255, 0.08) 0%, transparent 60%),
     radial-gradient(circle at 10% 80%, rgba(94, 234, 212, 0.05) 0%, transparent 65%),
     linear-gradient(145deg, #0a0f1e 0%, #0b121f 100%);
-  
   isolation: isolate;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2.5rem;
 }
 
-/* ---------- Grain overlay ---------- */
 .services::before {
   content: '';
   position: absolute;
@@ -749,7 +778,6 @@ a:focus-visible {
   z-index: 1;
 }
 
-/* ---------- Depth radials ---------- */
 .services::after {
   content: '';
   position: absolute;
@@ -766,9 +794,6 @@ a:focus-visible {
   z-index: 10;
 }
 
-/* =============================================
-   HEADER – spans full width
-============================================= */
 .services-header {
   grid-column: span 2;
   text-align: center;
@@ -791,10 +816,8 @@ a:focus-visible {
   margin-bottom: 1rem;
   position: relative;
   display: inline-block;
-  
 }
 
-/* Premium brush underline – thinner, elegant blur */
 .services-header h2::after {
   content: '';
   position: absolute;
@@ -817,10 +840,6 @@ a:focus-visible {
   margin-top: 0.5rem;
 }
 
-/* =============================================
-   SERVICE CARDS – iOS 26 bubble glass
-   with collapsible dropdown (ios style)
-============================================= */
 .service-card {
   position: relative;
   padding: 2rem 1.8rem 1.8rem 1.8rem;
@@ -834,9 +853,20 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  opacity: 0;
+  animation: cardRise 0.7s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
 }
 
-/* Inner glow – permanent */
+.service-card:nth-child(2) { animation-delay: 0.1s; }
+.service-card:nth-child(3) { animation-delay: 0.2s; }
+.service-card:nth-child(4) { animation-delay: 0.3s; }
+.service-card:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes cardRise {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 .service-card::after {
   content: '';
   position: absolute;
@@ -846,7 +876,6 @@ a:focus-visible {
   pointer-events: none;
 }
 
-/* Hover – lift + bubble */
 .service-card:hover {
   transform: translateY(-8px);
   border-color: rgba(124, 124, 255, 0.4);
@@ -858,7 +887,6 @@ a:focus-visible {
     0 0 30px rgba(124, 124, 255, 0.3);
 }
 
-/* ---------- Decorative orb ---------- */
 .service-card::before {
   content: '';
   position: absolute;
@@ -878,7 +906,6 @@ a:focus-visible {
   transform: scale(1.2);
 }
 
-/* ---------- Icon / emoji ---------- */
 .service-icon {
   width: 56px;
   height: 56px;
@@ -900,7 +927,6 @@ a:focus-visible {
   transform: scale(1.05) translateY(-2px);
 }
 
-/* ---------- Title & short description ---------- */
 .service-card h3 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -914,15 +940,12 @@ a:focus-visible {
   color: rgba(210, 230, 255, 0.8);
   line-height: 1.6;
   margin-bottom: 1rem;
-  /* limit to 3 lines – clean minimal */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* ========== DROPDOWN (iOS STYLE) ========== */
-/* Details/summary – native, but we style it beautifully */
 .service-card details {
   margin-top: 0.8rem;
   width: 100%;
@@ -943,12 +966,10 @@ a:focus-visible {
   margin-top: 0.2rem;
 }
 
-/* Remove default triangle (webkit) */
 .service-card summary::-webkit-details-marker {
   display: none;
 }
 
-/* Custom chevron (iOS style) */
 .service-card summary::after {
   content: '▼';
   font-size: 0.75rem;
@@ -965,7 +986,6 @@ a:focus-visible {
   color: #ffffff;
 }
 
-/* Dropdown content – features list */
 .service-card .feature-list {
   margin: 0.8rem 0 0.5rem 0.2rem;
   padding-left: 0.8rem;
@@ -982,7 +1002,6 @@ a:focus-visible {
   gap: 0.5rem;
 }
 
-/* Custom bullet (iOS checkmark style) */
 .service-card .feature-list li::before {
   content: '✓';
   color: #5eead4;
@@ -991,13 +1010,11 @@ a:focus-visible {
   font-size: 0.9rem;
 }
 
-/* Dropdown animation */
 @keyframes slideDown {
   0% { opacity: 0; transform: translateY(-10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Card CTA (optional) ---------- */
 .service-card .btn {
   align-self: flex-start;
   margin-top: 1.2rem;
@@ -1016,7 +1033,6 @@ a:focus-visible {
   gap: 0.4rem;
 }
 
-/* iOS bubble hover (global CTA style) */
 .service-card .btn:hover {
   transform: translateY(-3px) scale(1.02);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -1029,9 +1045,6 @@ a:focus-visible {
   color: white;
 }
 
-/* =============================================
-   BRAND IMPACT – full width, premium closing
-============================================= */
 .brand-impact {
   grid-column: span 2;
   text-align: center;
@@ -1042,6 +1055,7 @@ a:focus-visible {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.4s;
+  animation: softFloat 6s infinite ease-in-out;
 }
 
 .brand-impact:hover {
@@ -1067,21 +1081,21 @@ a:focus-visible {
   letter-spacing: 0.01em;
 }
 
-/* =============================================
-   RESPONSIVE – flawless spacing
-============================================= */
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
 @media screen and (max-width: 980px) {
   .services {
     grid-template-columns: 1fr;
     padding: 4rem 2rem;
     gap: 2rem;
   }
-
   .services-header,
   .brand-impact {
     grid-column: span 1;
   }
-
   .services-header {
     margin-bottom: 1rem;
   }
@@ -1092,62 +1106,26 @@ a:focus-visible {
     padding: 3rem 1.5rem;
     gap: 1.8rem;
   }
-
   .service-card {
     padding: 1.8rem 1.5rem;
   }
-
   .service-card h3 {
     font-size: 1.3rem;
   }
-
   .services-header h2 {
     font-size: 2rem;
   }
-
   .services-header p {
     font-size: 1rem;
   }
-
   .brand-impact {
     padding: 2rem 1.2rem;
   }
-
   .brand-impact h2 {
     font-size: 1.6rem;
   }
 }
 
-/* =============================================
-   MICRO-INTERACTIONS & VISUAL ENTERTAINMENT
-============================================= */
-/* Card entrance stagger */
-.service-card {
-  opacity: 0;
-  animation: cardRise 0.7s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
-}
-
-.service-card:nth-child(2) { animation-delay: 0.1s; }
-.service-card:nth-child(3) { animation-delay: 0.2s; }
-.service-card:nth-child(4) { animation-delay: 0.3s; }
-.service-card:nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes cardRise {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Gentle floating on brand-impact */
-@keyframes softFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-.brand-impact {
-  animation: softFloat 6s infinite ease-in-out;
-}
-
-/* Reduced motion */
 @media (prefers-reduced-motion) {
   .service-card,
   .brand-impact,
@@ -1158,16 +1136,12 @@ a:focus-visible {
   }
 }
 
-/* =============================================
-   TYPOGRAPHY CONSISTENCY – Inter
-============================================= */
 .service-card,
 .services-header,
 .brand-impact {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Remove any unwanted stacking issues */
 .services .service-card details,
 .services .service-card p,
 .services .service-card .btn {
@@ -1175,12 +1149,10 @@ a:focus-visible {
   z-index: 15;
 }
 
-/* ---------- iOS style disclosure (dropdown) refinement ---------- */
 .service-card details[open] .feature-list {
   margin-bottom: 0.5rem;
 }
 
-/* polish for very small screens */
 @media (max-width: 480px) {
   .service-card .feature-list li {
     font-size: 0.88rem;
@@ -1193,118 +1165,66 @@ a:focus-visible {
 /* ======================================
    iOS STYLE DYNAMIC ISLAND
 ====================================== */
-
 .dynamic-island {
-
-    position: fixed;
-
-    top: 15px;
-
-    left: 50%;
-
-    transform: translateX(-50%) scale(1);
-
-    z-index: 10000;
-
-    height: 38px;
-
-    width: 120px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: rgba(0,0,0,0.88);
-
-    backdrop-filter: blur(24px);
-
-    border-radius: 50px;
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    transition:
-        width 1.45s cubic-bezier(.34,1.56,.64,1),
-        transform 1.35s cubic-bezier(.34,1.56,.64,1),
-        border-radius 1.35s ease,
-        background 1.3s ease;
-
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  z-index: 10000;
+  height: 38px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(24px);
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition:
+    width 1.45s cubic-bezier(.34,1.56,.64,1),
+    transform 1.35s cubic-bezier(.34,1.56,.64,1),
+    border-radius 1.35s ease,
+    background 1.3s ease;
 }
 
-
-/* Morph expand */
 .dynamic-island.expand {
-
-    width: 240px;
-
-    border-radius: 20px;
-
-    transform: translateX(-50%) scale(1.03);
-
+  width: 240px;
+  border-radius: 20px;
+  transform: translateX(-50%) scale(1.03);
 }
 
-
-/* Morph compress */
 .dynamic-island.compress {
-
-    width: 140px;
-
+  width: 140px;
 }
 
-
-/* container */
 .di-container {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-
-/* icon */
 .di-status {
-
-    font-size: 10px;
-
-    color: #00ffa3;
-
-    animation: pulse 2s infinite;
-
+  font-size: 10px;
+  color: #00ffa3;
+  animation: pulse 2s infinite;
 }
 
-
-/* text */
 .di-label {
-
-    color: white;
-
-    font-size: 13px;
-
-    font-weight: 500;
-
-    opacity: .9;
-
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: .9;
 }
 
-
-/* pulse */
 @keyframes pulse {
-
-    0% {opacity:.4; transform:scale(.8);}
-    50% {opacity:1; transform:scale(1.2);}
-    100% {opacity:.4; transform:scale(.8);}
-
+  0% {opacity:.4; transform:scale(.8);}
+  50% {opacity:1; transform:scale(1.2);}
+  100% {opacity:.4; transform:scale(.8);}
 }
-
 
 /* =========================
-   PRICING SECTION – iOS LIQUID GLASS STYLE (IMPROVED & RESPONSIVE)
+   PRICING SECTION – iOS LIQUID GLASS STYLE
 ========================= */
-
 .pricing {
   max-width: 1400px;
   margin: 0 auto;
@@ -1327,7 +1247,6 @@ a:focus-visible {
   margin-bottom: 2rem;
 }
 
-/* ----- Toggle Pill (glass) ----- */
 .pricing-toggle {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1370,14 +1289,12 @@ a:focus-visible {
   transform: translateY(-2px);
 }
 
-/* ----- Carousel Container ----- */
 .pricing-carousel {
   position: relative;
   width: 100%;
-  overflow: hidden; /* hides the non-active categories */
+  overflow: hidden;
 }
 
-/* Category wrapper – only active is displayed */
 .carousel-category {
   display: none;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1392,14 +1309,12 @@ a:focus-visible {
   opacity: 1;
 }
 
-/* On larger screens, cards appear as a responsive grid */
 @media (min-width: 1024px) {
   .carousel-category.active {
-    grid-template-columns: repeat(3, 1fr); /* show 3 cards per row */
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* On tablets, allow horizontal swipe if needed */
 @media (max-width: 1023px) and (min-width: 601px) {
   .carousel-category.active {
     display: flex;
@@ -1408,10 +1323,10 @@ a:focus-visible {
     scroll-snap-type: x mandatory;
     padding-bottom: 1.5rem;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
   .carousel-category.active::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
   }
   .pricing-card {
     flex: 0 0 300px;
@@ -1419,7 +1334,6 @@ a:focus-visible {
   }
 }
 
-/* Mobile: full-width cards with horizontal scroll */
 @media (max-width: 600px) {
   .carousel-category.active {
     display: flex;
@@ -1429,6 +1343,8 @@ a:focus-visible {
     padding-bottom: 1.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    width: 100%;
+    flex-wrap: nowrap;
   }
   .carousel-category.active::-webkit-scrollbar {
     display: none;
@@ -1439,7 +1355,6 @@ a:focus-visible {
   }
 }
 
-/* ----- Pricing Card (glass) ----- */
 .pricing-card {
   background: rgba(20, 22, 30, 0.35);
   backdrop-filter: blur(16px) saturate(180%);
@@ -1463,7 +1378,6 @@ a:focus-visible {
   transform: translateY(-4px);
 }
 
-/* Card content */
 .pricing-card h3 {
   font-size: 1.6rem;
   font-weight: 500;
@@ -1520,7 +1434,6 @@ a:focus-visible {
   margin-top: 0.5rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
   .pricing {
     padding: 4rem 1rem;
@@ -1546,9 +1459,7 @@ a:focus-visible {
   }
 }
 
-/* ===== TESTIMONIALS SECTION – Prisma iOS Glass + Infinite Marquee ===== */
-/* Include this CSS in your existing stylesheet. */
-
+/* ===== TESTIMONIALS SECTION ===== */
 .testimonials {
   width: 100%;
   max-width: 1400px;
@@ -1573,7 +1484,6 @@ a:focus-visible {
   z-index: 5;
 }
 
-/* Optional subtle grid overlay (prisma-like) */
 .testimonials::after {
   content: '';
   position: absolute;
@@ -1586,7 +1496,6 @@ a:focus-visible {
   z-index: 1;
 }
 
-/* ----- marquee container (liquid glass backdrop) ----- */
 .testimonials-marquee {
   width: 100%;
   overflow: hidden;
@@ -1596,7 +1505,6 @@ a:focus-visible {
   position: relative;
 }
 
-/* liquid glass undulating background */
 .testimonials-marquee::before {
   content: '';
   position: absolute;
@@ -1617,7 +1525,6 @@ a:focus-visible {
   100% { opacity: 0.6; transform: scale(0.98) translate(0.8%, -0.3%); filter: blur(12px) brightness(1.1); }
 }
 
-/* ----- track that scrolls infinitely ----- */
 .testimonials-track {
   display: flex;
   gap: 1.5rem;
@@ -1629,17 +1536,15 @@ a:focus-visible {
   padding: 0.5rem 0;
 }
 
-/* pause on hover (ios-like) */
 .testimonials-marquee:hover .testimonials-track {
   animation-play-state: paused;
 }
 
 @keyframes infiniteScroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* moves exactly half (requires duplicate set) */
+  100% { transform: translateX(-50%); }
 }
 
-/* ===== GLASS CARD ===== */
 .testimonial-card {
   width: 320px;
   flex-shrink: 0;
@@ -1663,7 +1568,6 @@ a:focus-visible {
   z-index: 4;
 }
 
-/* extra liquid edge (prisma-like) */
 .testimonial-card::after {
   content: '';
   position: absolute;
@@ -1686,7 +1590,6 @@ a:focus-visible {
   transform: translateY(-4px) scale(1.01);
 }
 
-/* avatar + name */
 .t-n {
   display: flex;
   align-items: center;
@@ -1701,7 +1604,7 @@ a:focus-visible {
   width: 44px;
   height: 44px;
   background: linear-gradient(145deg, #3c4f8c, #26346b);
-  border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%; /* organic shape */
+  border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1727,7 +1630,6 @@ a:focus-visible {
   z-index: 2;
 }
 
-/* ===== RESPONSIVE ===== */
 @media screen and (max-width: 900px) {
   .testimonial-card {
     width: 280px;
@@ -1777,10 +1679,7 @@ a:focus-visible {
   }
 }
 
-/* ===== CONTACT & FOOTER – Prisma iOS Glass ===== */
-/* Independent – works with existing styles */
-
-/* ----- Contact Section ----- */
+/* ===== CONTACT & FOOTER ===== */
 .contact {
   width: 100%;
   max-width: 1200px;
@@ -1827,7 +1726,6 @@ a:focus-visible {
   margin: 0 auto;
 }
 
-/* ----- Accordion Group (glass card) ----- */
 .contact-group {
   background: rgba(20, 22, 30, 0.35);
   backdrop-filter: blur(16px) saturate(180%);
@@ -1845,7 +1743,6 @@ a:focus-visible {
   box-shadow: 0 25px 40px -20px #3a4f9f, 0 0 0 1px rgba(160, 190, 255, 0.3);
 }
 
-/* header button */
 .contact-header {
   width: 100%;
   display: flex;
@@ -1878,12 +1775,10 @@ a:focus-visible {
   transition: transform 0.3s ease;
 }
 
-/* rotate chevron when open */
 .contact-group.open .contact-header i {
   transform: rotate(180deg);
 }
 
-/* expanded links area */
 .contact-links {
   max-height: 0;
   opacity: 0;
@@ -1895,13 +1790,12 @@ a:focus-visible {
 }
 
 .contact-group.open .contact-links {
-  max-height: 250px; /* plenty for content */
+  max-height: 250px;
   opacity: 1;
   padding: 1.5rem 2rem 2rem 2rem;
   border-top-color: rgba(140, 170, 255, 0.2);
 }
 
-/* contact button inside */
 .contact-btn {
   display: inline-block;
   padding: 0.9rem 2rem;
@@ -1921,7 +1815,6 @@ a:focus-visible {
   overflow: hidden;
 }
 
-/* brand-specific gradients */
 .contact-btn.whatsapp {
   background: linear-gradient(145deg, #25D36680, #128C7E80), rgba(0,0,0,0.2);
   background-origin: border-box;
@@ -1964,7 +1857,6 @@ a:focus-visible {
   font-style: italic;
 }
 
-/* ----- Footer ----- */
 .footer {
   max-width: 1200px;
   margin: 0 auto;
@@ -2032,7 +1924,6 @@ a:focus-visible {
   letter-spacing: 0.5px;
 }
 
-/* ----- Responsive adjustments ----- */
 @media screen and (max-width: 600px) {
   .contact {
     padding: 3rem 1.5rem;
