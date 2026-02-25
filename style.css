@@ -1,0 +1,2063 @@
+/* ---------------------------------------------
+   GLOBAL RESET & BASE – DARK, PREMIUM
+--------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: "liga", "kern";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: #070c14; /* unified deep navy */
+  color: rgba(235, 245, 255, 0.92);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------
+   STICKY HEADER – GLASS MORPHISM
+--------------------------------------------- */
+header {
+  position: sticky;
+  top: 80px;
+  z-index: 1000;
+  width: 92%;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  transition: width 0.35s ease, border-radius 0.35s ease, box-shadow 0.35s ease;
+}
+
+header.scrolled {
+  width: 78%;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  transform: scale(2.15);
+  transform-origin: left center;
+}
+
+
+
+
+.header-icon i {
+  font-size: 0.95rem;
+}
+
+
+/* =========================================
+   iOS LIQUID GLASS SYSTEM — GLOBAL BASE
+   Used by header icons, CTA buttons, etc.
+========================================= */
+
+:root {
+
+  --glass-blur: 18px;
+  --glass-border: rgba(255,255,255,0.18);
+  --glass-bg: rgba(255,255,255,0.08);
+  --glass-highlight: rgba(255,255,255,0.35);
+  --glass-shadow:
+      0 10px 30px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 -1px 0 rgba(255,255,255,0.06);
+
+}
+
+
+/* =========================================
+   HEADER ICON CONTAINER
+========================================= */
+
+.header-icon {
+
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+}
+
+
+/* =========================================
+   LIQUID GLASS ICON BUTTONS
+========================================= */
+
+.header-icon a {
+
+  position: relative;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: white;
+  font-size: 15px;
+
+  text-decoration: none;
+
+  background: var(--glass-bg);
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+
+  border: 1px solid var(--glass-border);
+
+  box-shadow: var(--glass-shadow);
+
+  overflow: hidden;
+
+  transition:
+    transform .45s cubic-bezier(.34,1.56,.64,1),
+    box-shadow .4s ease,
+    background .4s ease;
+
+}
+
+
+/* specular reflection */
+.header-icon a::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.4) 0%,
+      rgba(255,255,255,0.15) 30%,
+      transparent 60%
+    );
+
+  opacity: .7;
+
+  pointer-events: none;
+
+}
+
+
+/* liquid diffusion */
+.header-icon a::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,0.4),
+      transparent 45%
+    );
+
+  opacity: .5;
+
+}
+
+
+/* hover liquid morph */
+.header-icon a:hover {
+
+  transform: scale(1.15);
+
+  background: rgba(255,255,255,0.16);
+
+  box-shadow:
+
+      0 20px 50px rgba(0,0,0,0.45),
+
+      inset 0 1px 0 rgba(255,255,255,0.35),
+
+      inset 0 -1px 0 rgba(255,255,255,0.1);
+
+}
+
+
+/* press */
+.header-icon a:active {
+
+  transform: scale(.92);
+
+}
+
+
+/* =========================================
+   LIQUID GLASS CTA BASE
+========================================= */
+
+.header-cta,
+.hero-cta,
+.btn {
+
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.7rem 1.6rem;
+
+  border-radius: 999px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  color: white;
+
+  border: 1px solid var(--glass-border);
+
+  background: var(--glass-bg);
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+
+  box-shadow: var(--glass-shadow);
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    transform .45s cubic-bezier(.34,1.56,.64,1),
+    box-shadow .45s ease,
+    background .45s ease;
+
+}
+
+
+/* reflection layer */
+.header-cta::before,
+.hero-cta::before,
+.btn::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.45),
+      rgba(255,255,255,0.12),
+      transparent 60%
+    );
+
+  opacity: .75;
+
+}
+
+
+/* liquid diffusion */
+.header-cta::after,
+.hero-cta::after,
+.btn::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,0.45),
+      transparent 45%
+    );
+
+  opacity: .55;
+
+}
+
+
+/* =========================================
+   HERO CTA — KEEP GRADIENT BUT ADD GLASS
+========================================= */
+
+.hero-cta {
+
+  background:
+    linear-gradient(135deg, #7c7cff, #5eead4);
+
+  color: #0b0d12;
+
+  border: 1px solid rgba(255,255,255,0.35);
+
+}
+
+
+/* =========================================
+   HEADER CTA COLOR TINT
+========================================= */
+
+.header-cta {
+
+  background: rgba(94,234,212,0.12);
+
+  border: 1px solid rgba(94,234,212,0.35);
+
+}
+
+
+/* =========================================
+   ABOUT BUTTON GLASS
+========================================= */
+
+.btn {
+
+  background: rgba(31,60,122,0.35);
+
+  border: 1px solid rgba(150,200,255,0.3);
+
+  padding: 0.9rem 2.6rem;
+
+}
+
+
+/* =========================================
+   LIQUID HOVER MORPH
+========================================= */
+
+.header-cta:hover,
+.hero-cta:hover,
+.btn:hover {
+
+  transform: scale(1.08);
+
+  background: rgba(255,255,255,0.18);
+
+  box-shadow:
+
+      0 30px 60px rgba(0,0,0,0.5),
+
+      inset 0 1px 0 rgba(255,255,255,0.45),
+
+      inset 0 -1px 0 rgba(255,255,255,0.15);
+
+}
+
+
+/* keep hero gradient on hover */
+.hero-cta:hover {
+
+  background:
+    linear-gradient(135deg, #8f8fff, #7cf0dc);
+
+}
+
+
+/* press effect */
+.header-cta:active,
+.hero-cta:active,
+.btn:active {
+
+  transform: scale(.96);
+
+  box-shadow:
+      0 10px 20px rgba(0,0,0,0.35);
+
+}
+
+
+/* hero section */
+.hero {
+  min-height: 100vh;
+  width: 100%;
+  margin-top: -84px;
+  padding-top: 84px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
+    url('./Assets/designbg-1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-inline: 1.2rem;
+  color: #ffffff;
+  transform: translateY(-4vh);
+  margin-bottom: 0;
+}
+
+.hero-h1 {
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  max-width: 900px;
+}
+
+.hero-h1 span {
+  background: linear-gradient(135deg, #7c7cff, #5eead4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-sub {
+  margin-top: 1.2rem;
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+}
+
+.hero-cta {
+  margin-top: 2.2rem;
+  padding: 1rem 2.4rem;
+  border-radius: 999px;
+}
+
+
+
+/* about section */
+.about {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 4rem;
+  background: radial-gradient(circle at 80% 20%, rgba(20, 40, 70, 0.35) 0%, transparent 60%),
+              radial-gradient(circle at 10% 70%, rgba(80, 50, 120, 0.2) 0%, transparent 65%),
+              linear-gradient(145deg, #0a0f1e 0%, #0b121f 100%);
+  background-blend-mode: overlay, normal, normal;
+  border-bottom: 1px solid rgba(75, 130, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  isolation: isolate;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.about.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grain texture */
+.about::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.4"/></svg>');
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  opacity: 0.14;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Radial depth layers */
+.about::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(30, 100, 200, 0.08) 0%, transparent 55%),
+              radial-gradient(ellipse at 20% 80%, rgba(150, 80, 255, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-content,
+.about-image {
+  position: relative;
+  z-index: 5;
+}
+
+.about-content {
+  flex: 1.1;
+  max-width: 620px;
+}
+
+.about-content h2 {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0f6ff 0%, #c8e0ff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.8rem;
+  text-shadow: 0 2px 5px rgba(0, 20, 50, 0.3);
+}
+
+.about-content p {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: rgba(210, 230, 255, 0.8);
+  margin-bottom: 2.2rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  font-weight: 350;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Image container – 3D tilt + glass ---------- */
+.about-image {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  max-width: 560px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: 0 30px 40px -25px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  background: radial-gradient(circle at 30% 50%, rgba(30, 120, 210, 0.08) 0%, transparent 70%);
+  backdrop-filter: blur(2px);
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 0 30px 2px rgba(25, 150, 255, 0.2), 0 10px 25px -10px black;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(145deg, #0f1820, #0b121c);
+  z-index: 2;
+}
+
+/* Spotlight overlay – cursor‑follow */
+.spotlight {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(155, 220, 255, 0.2) 0%,
+    rgba(130, 200, 255, 0.1) 30%,
+    rgba(60, 140, 220, 0.03) 60%,
+    transparent 85%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 20;
+  mix-blend-mode: soft-light;
+  will-change: left, top;
+  transition: left 0.4s ease-out, top 0.4s ease-out;
+  filter: blur(6px);
+  opacity: 0.9;
+}
+
+/* Permanent soft glow */
+.about-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  box-shadow: 0 0 40px 8px rgba(40, 130, 255, 0.13) inset, 0 0 30px 6px rgba(0,180,255,0.1);
+  pointer-events: none;
+  z-index: 15;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ---------------------------------------------
+   RESPONSIVE BREAKPOINTS – FINE‑TUNED
+--------------------------------------------- */
+@media screen and (max-width: 1024px) {
+  .about { gap: 3rem; padding: 5rem 3rem; }
+  .about-content h2 { font-size: 2.6rem; }
+}
+
+@media screen and (max-width: 860px) {
+  .about {
+    flex-direction: column;
+    padding: 4rem 2rem;
+    gap: 3rem;
+  }
+  .about-image {
+    order: -1;
+    max-width: 560px;
+    width: 100%;
+  }
+  .about-content {
+    max-width: 100%;
+    text-align: center;
+  }
+  .about-content p { font-size: 1.1rem; }
+  .btn { padding: 0.9rem 2.5rem; }
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    height: 58px;
+    width: 94%;
+  }
+  header.scrolled { width: 90%; }
+  .header-logo {
+    height: 34px;
+    transform: scale(1.1);
+  }
+  .header-cta {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header {
+    top: 12px;
+    height: 54px;
+  }
+  .header-logo {
+    height: 30px;
+    transform: scale(1);
+  }
+  .header-icon { gap: 0.6rem; }
+  .header-icon a {
+    width: 32px;
+    height: 32px;
+  }
+  .header-icon i { font-size: 0.85rem; }
+
+  .hero {
+    margin-top: -66px;
+    padding-top: 66px;
+    transform: translateY(-2vh);
+  }
+  .hero-h1 { font-size: 2rem; }
+  .hero-cta {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+
+  .about { padding: 3.5rem 1.8rem; }
+  .about-content h2 { font-size: 2.1rem; }
+  .about-content p { font-size: 1rem; }
+  .spotlight {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .about { padding: 7rem 4rem; }
+}
+
+/* ---------------------------------------------
+   EXTRA FINETUNING – POLISH
+--------------------------------------------- */
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 24px -10px rgba(0, 180, 255, 0.4);
+}
+
+body > *:first-child {
+  margin-top: 0;
+}
+
+/* Smooth focus outline for accessibility */
+a:focus-visible {
+  outline: 2px solid rgba(124, 124, 255, 0.8);
+  outline-offset: 4px;
+  border-radius: 40px;
+}
+
+/* Remove animation on reduced motion */
+@media (prefers-reduced-motion) {
+  .hero-cta {
+    animation: none;
+  }
+  .about,
+  .header-cta,
+  .hero-cta,
+  .btn,
+  .header-icon a {
+    transition: none !important;
+  }
+}
+
+/* =============================================
+   SERVICES SECTION – PREMIUM iOS BUBBLE DROPDOWN
+   Prisma dark, glass, interactive collapsible cards
+   Best section of the website ✦
+============================================= */
+.services {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 4rem;
+  
+  /* Deep gradient foundation – same as about */
+  background: 
+    radial-gradient(circle at 85% 15%, rgba(124, 124, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 80%, rgba(94, 234, 212, 0.05) 0%, transparent 65%),
+    linear-gradient(145deg, #0a0f1e 0%, #0b121f 100%);
+  
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+/* ---------- Grain overlay ---------- */
+.services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.06 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.35"/></svg>');
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  opacity: 0.12;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* ---------- Depth radials ---------- */
+.services::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 70% 30%, rgba(124, 124, 255, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(94, 234, 212, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.services > * {
+  position: relative;
+  z-index: 10;
+}
+
+/* =============================================
+   HEADER – spans full width
+============================================= */
+.services-header {
+  grid-column: span 2;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -160px;
+}
+
+.services-header h2 {
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0f6ff 0%, #7c7cff 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  
+}
+
+/* Premium brush underline – thinner, elegant blur */
+.services-header h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 5px;
+  background: linear-gradient(90deg, #7c7cff, #5eead4);
+  border-radius: 6px;
+  filter: blur(4px);
+  opacity: 0.6;
+}
+
+.services-header p {
+  font-size: 1.1rem;
+  color: rgba(210, 230, 255, 0.8);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-top: 0.5rem;
+}
+
+/* =============================================
+   SERVICE CARDS – iOS 26 bubble glass
+   with collapsible dropdown (ios style)
+============================================= */
+.service-card {
+  position: relative;
+  padding: 2rem 1.8rem 1.8rem 1.8rem;
+  border-radius: 28px;
+  background: rgba(20, 30, 45, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Inner glow – permanent */
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  box-shadow: inset 0 0 30px rgba(124, 124, 255, 0.08);
+  pointer-events: none;
+}
+
+/* Hover – lift + bubble */
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 124, 255, 0.4);
+  background: rgba(30, 45, 65, 0.6);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 25px 45px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 0 30px rgba(124, 124, 255, 0.3);
+}
+
+/* ---------- Decorative orb ---------- */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(124, 124, 255, 0.25), rgba(94, 234, 212, 0.15));
+  opacity: 0.2;
+  transition: opacity 0.4s, transform 0.5s;
+  pointer-events: none;
+}
+
+.service-card:hover::before {
+  opacity: 0.4;
+  transform: scale(1.2);
+}
+
+/* ---------- Icon / emoji ---------- */
+.service-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(124, 124, 255, 0.2), rgba(94, 234, 212, 0.1));
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1.8rem;
+  transition: all 0.3s;
+}
+
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, rgba(124, 124, 255, 0.3), rgba(94, 234, 212, 0.2));
+  border-color: rgba(124, 124, 255, 0.5);
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* ---------- Title & short description ---------- */
+.service-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  color: #f0f6ff;
+  letter-spacing: -0.01em;
+}
+
+.service-card > p {
+  font-size: 0.98rem;
+  color: rgba(210, 230, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  /* limit to 3 lines – clean minimal */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ========== DROPDOWN (iOS STYLE) ========== */
+/* Details/summary – native, but we style it beautifully */
+.service-card details {
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.service-card summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #b0d0ff;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.2s;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 0.2rem;
+}
+
+/* Remove default triangle (webkit) */
+.service-card summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom chevron (iOS style) */
+.service-card summary::after {
+  content: '▼';
+  font-size: 0.75rem;
+  color: rgba(124, 124, 255, 0.9);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+  margin-left: auto;
+}
+
+.service-card details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.service-card summary:hover {
+  color: #ffffff;
+}
+
+/* Dropdown content – features list */
+.service-card .feature-list {
+  margin: 0.8rem 0 0.5rem 0.2rem;
+  padding-left: 0.8rem;
+  list-style: none;
+  animation: slideDown 0.3s ease-out;
+}
+
+.service-card .feature-list li {
+  margin-bottom: 0.6rem;
+  font-size: 0.94rem;
+  color: rgba(200, 220, 255, 0.85);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+/* Custom bullet (iOS checkmark style) */
+.service-card .feature-list li::before {
+  content: '✓';
+  color: #5eead4;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Dropdown animation */
+@keyframes slideDown {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Card CTA (optional) ---------- */
+.service-card .btn {
+  align-self: flex-start;
+  margin-top: 1.2rem;
+  padding: 0.6rem 1.6rem;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* iOS bubble hover (global CTA style) */
+.service-card .btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+  box-shadow: 
+    0 20px 40px -8px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 0 20px rgba(124, 124, 255, 0.3);
+  color: white;
+}
+
+/* =============================================
+   BRAND IMPACT – full width, premium closing
+============================================= */
+.brand-impact {
+  grid-column: span 2;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 3rem 2rem;
+  border-radius: 32px;
+  background: rgba(10, 20, 30, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s;
+}
+
+.brand-impact:hover {
+  background: rgba(15, 30, 45, 0.6);
+  border-color: rgba(124, 124, 255, 0.25);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+.brand-impact h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 600;
+  background: linear-gradient(135deg, #ffffff, #5eead4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.8rem;
+}
+
+.brand-impact .closing-statement {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #7c7cff;
+  letter-spacing: 0.01em;
+}
+
+/* =============================================
+   RESPONSIVE – flawless spacing
+============================================= */
+@media screen and (max-width: 980px) {
+  .services {
+    grid-template-columns: 1fr;
+    padding: 4rem 2rem;
+    gap: 2rem;
+  }
+
+  .services-header,
+  .brand-impact {
+    grid-column: span 1;
+  }
+
+  .services-header {
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .services {
+    padding: 3rem 1.5rem;
+    gap: 1.8rem;
+  }
+
+  .service-card {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .services-header h2 {
+    font-size: 2rem;
+  }
+
+  .services-header p {
+    font-size: 1rem;
+  }
+
+  .brand-impact {
+    padding: 2rem 1.2rem;
+  }
+
+  .brand-impact h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* =============================================
+   MICRO-INTERACTIONS & VISUAL ENTERTAINMENT
+============================================= */
+/* Card entrance stagger */
+.service-card {
+  opacity: 0;
+  animation: cardRise 0.7s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
+}
+
+.service-card:nth-child(2) { animation-delay: 0.1s; }
+.service-card:nth-child(3) { animation-delay: 0.2s; }
+.service-card:nth-child(4) { animation-delay: 0.3s; }
+.service-card:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes cardRise {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Gentle floating on brand-impact */
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.brand-impact {
+  animation: softFloat 6s infinite ease-in-out;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion) {
+  .service-card,
+  .brand-impact,
+  .service-card:hover,
+  .btn:hover {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =============================================
+   TYPOGRAPHY CONSISTENCY – Inter
+============================================= */
+.service-card,
+.services-header,
+.brand-impact {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Remove any unwanted stacking issues */
+.services .service-card details,
+.services .service-card p,
+.services .service-card .btn {
+  position: relative;
+  z-index: 15;
+}
+
+/* ---------- iOS style disclosure (dropdown) refinement ---------- */
+.service-card details[open] .feature-list {
+  margin-bottom: 0.5rem;
+}
+
+/* polish for very small screens */
+@media (max-width: 480px) {
+  .service-card .feature-list li {
+    font-size: 0.88rem;
+  }
+  .service-card summary {
+    font-size: 0.9rem;
+  }
+}
+
+/* ======================================
+   iOS STYLE DYNAMIC ISLAND
+====================================== */
+
+.dynamic-island {
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 50%;
+
+    transform: translateX(-50%) scale(1);
+
+    z-index: 10000;
+
+    height: 38px;
+
+    width: 120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(0,0,0,0.88);
+
+    backdrop-filter: blur(24px);
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    transition:
+        width 1.45s cubic-bezier(.34,1.56,.64,1),
+        transform 1.35s cubic-bezier(.34,1.56,.64,1),
+        border-radius 1.35s ease,
+        background 1.3s ease;
+
+}
+
+
+/* Morph expand */
+.dynamic-island.expand {
+
+    width: 240px;
+
+    border-radius: 20px;
+
+    transform: translateX(-50%) scale(1.03);
+
+}
+
+
+/* Morph compress */
+.dynamic-island.compress {
+
+    width: 140px;
+
+}
+
+
+/* container */
+.di-container {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+/* icon */
+.di-status {
+
+    font-size: 10px;
+
+    color: #00ffa3;
+
+    animation: pulse 2s infinite;
+
+}
+
+
+/* text */
+.di-label {
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    opacity: .9;
+
+}
+
+
+/* pulse */
+@keyframes pulse {
+
+    0% {opacity:.4; transform:scale(.8);}
+    50% {opacity:1; transform:scale(1.2);}
+    100% {opacity:.4; transform:scale(.8);}
+
+}
+
+
+/* =========================
+   PRICING SECTION – iOS LIQUID GLASS STYLE (IMPROVED & RESPONSIVE)
+========================= */
+
+.pricing {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+.pricing h2 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(130deg, #ffffff 0%, #c0c7ff 60%, #94a3ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+}
+
+/* ----- Toggle Pill (glass) ----- */
+.pricing-toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+  background: rgba(20, 22, 30, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 60px;
+  padding: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-btn {
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+.toggle-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ----- Carousel Container ----- */
+.pricing-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hides the non-active categories */
+}
+
+/* Category wrapper – only active is displayed */
+.carousel-category {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.carousel-category.active {
+  display: grid;
+  opacity: 1;
+}
+
+/* On larger screens, cards appear as a responsive grid */
+@media (min-width: 1024px) {
+  .carousel-category.active {
+    grid-template-columns: repeat(3, 1fr); /* show 3 cards per row */
+  }
+}
+
+/* On tablets, allow horizontal swipe if needed */
+@media (max-width: 1023px) and (min-width: 601px) {
+  .carousel-category.active {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .carousel-category.active::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  .pricing-card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+  }
+}
+
+/* Mobile: full-width cards with horizontal scroll */
+@media (max-width: 600px) {
+  .carousel-category.active {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .carousel-category.active::-webkit-scrollbar {
+    display: none;
+  }
+  .pricing-card {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+  }
+}
+
+/* ----- Pricing Card (glass) ----- */
+.pricing-card {
+  background: rgba(20, 22, 30, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2.5rem;
+  padding: 2rem 1.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 35px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(140, 170, 255, 0.1);
+  transition: all 0.3s ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pricing-card:hover {
+  background: rgba(30, 35, 48, 0.45);
+  border-color: rgba(140, 170, 255, 0.3);
+  box-shadow: 0 25px 40px -20px #3a4f9f, 0 0 0 1px rgba(160, 190, 255, 0.3);
+  transform: translateY(-4px);
+}
+
+/* Card content */
+.pricing-card h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(130deg, #fff, #c0c7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-card .price {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: white;
+  line-height: 1.2;
+}
+
+.pricing-card .price small {
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(200, 220, 255, 0.7);
+}
+
+.pricing-card .features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1;
+}
+
+.pricing-card .features li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.6rem;
+  position: relative;
+  color: rgba(230, 240, 255, 0.8);
+  font-weight: 350;
+}
+
+.pricing-card .features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #94a3ff;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.pricing-card .payment-info {
+  font-size: 0.9rem;
+  color: rgba(200, 220, 255, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .pricing {
+    padding: 4rem 1rem;
+  }
+  .pricing-toggle {
+    width: 100%;
+    border-radius: 40px;
+  }
+  .toggle-btn {
+    flex: 1 1 auto;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  .pricing-card {
+    padding: 1.5rem;
+    border-radius: 2rem;
+  }
+  .pricing-card h3 {
+    font-size: 1.4rem;
+  }
+  .pricing-card .price {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===== TESTIMONIALS SECTION – Prisma iOS Glass + Infinite Marquee ===== */
+/* Include this CSS in your existing stylesheet. */
+
+.testimonials {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.testimonials h2 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(130deg, #ffffff 0%, #c0c7ff 60%, #94a3ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  text-align: center;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+/* Optional subtle grid overlay (prisma-like) */
+.testimonials::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(rgba(100, 140, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 140, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ----- marquee container (liquid glass backdrop) ----- */
+.testimonials-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  padding: 1.5rem 0;
+  position: relative;
+}
+
+/* liquid glass undulating background */
+.testimonials-marquee::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 140, 255, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 180, 240, 0.15) 0%, transparent 40%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
+  filter: blur(12px) brightness(1.1);
+  z-index: 0;
+  pointer-events: none;
+  animation: liquidShift 14s infinite alternate ease-in-out;
+}
+
+@keyframes liquidShift {
+  0% { opacity: 0.5; transform: scale(1) translate(0%, 0%); filter: blur(10px) brightness(1); }
+  50% { opacity: 0.9; transform: scale(1.02) translate(-0.5%, 0.5%); filter: blur(14px) brightness(1.2); }
+  100% { opacity: 0.6; transform: scale(0.98) translate(0.8%, -0.3%); filter: blur(12px) brightness(1.1); }
+}
+
+/* ----- track that scrolls infinitely ----- */
+.testimonials-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: infiniteScroll 38s linear infinite;
+  will-change: transform;
+  position: relative;
+  z-index: 3;
+  padding: 0.5rem 0;
+}
+
+/* pause on hover (ios-like) */
+.testimonials-marquee:hover .testimonials-track {
+  animation-play-state: paused;
+}
+
+@keyframes infiniteScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* moves exactly half (requires duplicate set) */
+}
+
+/* ===== GLASS CARD ===== */
+.testimonial-card {
+  width: 320px;
+  flex-shrink: 0;
+  background: rgba(20, 22, 30, 0.3);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2.5rem;
+  padding: 2rem 1.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.25s ease;
+  box-shadow: 
+    0 20px 40px -20px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 0 1px rgba(140, 170, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  line-height: 1.5;
+  position: relative;
+  z-index: 4;
+}
+
+/* extra liquid edge (prisma-like) */
+.testimonial-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2.5rem;
+  padding: 2px;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.3), rgba(180,200,255,0) 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.testimonial-card:hover {
+  background: rgba(30, 35, 48, 0.45);
+  border-color: rgba(140, 170, 255, 0.3);
+  box-shadow: 0 25px 45px -20px #3a4f9f, 0 0 0 1px rgba(160, 190, 255, 0.3);
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* avatar + name */
+.t-n {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+.t-avatar {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(145deg, #3c4f8c, #26346b);
+  border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%; /* organic shape */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2), 0 4px 10px rgba(50, 100, 255, 0.3);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.t-body {
+  font-size: 1rem;
+  color: rgba(230, 240, 255, 0.8);
+  font-weight: 350;
+  line-height: 1.6;
+  text-wrap: pretty;
+  word-break: break-word;
+  margin-top: 0.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 900px) {
+  .testimonial-card {
+    width: 280px;
+    padding: 1.6rem 1.4rem;
+    border-radius: 2rem;
+  }
+  .testimonials-track {
+    gap: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .testimonials h2 {
+    margin-bottom: 2rem;
+  }
+  .testimonial-card {
+    width: 260px;
+    padding: 1.5rem 1.2rem;
+    border-radius: 2rem;
+  }
+  .t-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+  }
+  .t-n {
+    font-size: 1rem;
+  }
+  .t-body {
+    font-size: 0.92rem;
+  }
+  .testimonials-track {
+    gap: 1rem;
+    animation-duration: 28s;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .testimonial-card {
+    width: 220px;
+    padding: 1.2rem 1rem;
+  }
+  .t-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}
+
+/* ===== CONTACT & FOOTER – Prisma iOS Glass ===== */
+/* Independent – works with existing styles */
+
+/* ----- Contact Section ----- */
+.contact {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  position: relative;
+  z-index: 5;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.contact .section-title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(130deg, #ffffff 0%, #c0c7ff 60%, #94a3ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contact .contact-subtitle {
+  font-size: 1.2rem;
+  color: rgba(200, 215, 255, 0.7);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  font-weight: 350;
+  background: rgba(20, 30, 50, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  border-radius: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ----- Accordion Group (glass card) ----- */
+.contact-group {
+  background: rgba(20, 22, 30, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2rem;
+  box-shadow: 0 20px 35px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(140, 170, 255, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.contact-group:hover {
+  background: rgba(30, 35, 48, 0.45);
+  border-color: rgba(140, 170, 255, 0.3);
+  box-shadow: 0 25px 40px -20px #3a4f9f, 0 0 0 1px rgba(160, 190, 255, 0.3);
+}
+
+/* header button */
+.contact-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-header span {
+  background: linear-gradient(130deg, #fff, #c0c7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-header i {
+  font-size: 1.2rem;
+  color: rgba(200, 215, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+/* rotate chevron when open */
+.contact-group.open .contact-header i {
+  transform: rotate(180deg);
+}
+
+/* expanded links area */
+.contact-links {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s;
+  padding: 0 2rem;
+  background: rgba(10, 12, 18, 0.2);
+  border-top: 1px solid transparent;
+}
+
+.contact-group.open .contact-links {
+  max-height: 250px; /* plenty for content */
+  opacity: 1;
+  padding: 1.5rem 2rem 2rem 2rem;
+  border-top-color: rgba(140, 170, 255, 0.2);
+}
+
+/* contact button inside */
+.contact-btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  border-radius: 40px;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: white;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* brand-specific gradients */
+.contact-btn.whatsapp {
+  background: linear-gradient(145deg, #25D36680, #128C7E80), rgba(0,0,0,0.2);
+  background-origin: border-box;
+  border-color: #25D36640;
+}
+
+.contact-btn.telegram {
+  background: linear-gradient(145deg, #0088cc80, #005f8c80), rgba(0,0,0,0.2);
+  border-color: #0088cc40;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 15px 30px -8px #3a4f9f;
+}
+
+.contact-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 140%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.contact-btn:hover::after {
+  opacity: 1;
+}
+
+.trust-note {
+  font-size: 0.95rem;
+  color: rgba(200, 220, 255, 0.6);
+  border-left: 2px solid rgba(140, 170, 255, 0.4);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+/* ----- Footer ----- */
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid rgba(140, 170, 255, 0.15);
+  background: rgba(10, 12, 18, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 3rem 3rem 0 0;
+}
+
+.footer-logo {
+  max-width: 160px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 15px rgba(140, 170, 255, 0.4));
+}
+
+.footer-icon {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.footer-icon a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(30, 35, 48, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.5rem;
+  transition: all 0.25s;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.6);
+}
+
+.footer-icon a:hover {
+  background: rgba(70, 100, 200, 0.4);
+  border-color: rgba(140, 170, 255, 0.6);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 15px 30px -5px #3a4f9f;
+}
+
+.footer-text {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  color: rgba(220, 235, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.7;
+  font-weight: 350;
+}
+
+.footer-copy {
+  color: rgba(180, 200, 255, 0.4);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* ----- Responsive adjustments ----- */
+@media screen and (max-width: 600px) {
+  .contact {
+    padding: 3rem 1.5rem;
+  }
+  .contact .contact-subtitle {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  .contact-header {
+    font-size: 1.3rem;
+    padding: 1.2rem 1.5rem;
+  }
+  .contact-links {
+    padding: 0 1.5rem;
+  }
+  .contact-group.open .contact-links {
+    padding: 1.2rem 1.5rem 1.8rem;
+  }
+  .contact-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  .footer-icon a {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+}
