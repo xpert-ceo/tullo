@@ -1965,3 +1965,48 @@ a:focus-visible {
     font-size: 1.3rem;
   }
 }
+
+/* ===== ULTIMATE FIX: PRICING SCROLL ON SMALL SCREENS ===== */
+@media screen and (max-width: 600px) {
+  /* Force the outer carousel to allow overflow */
+  .pricing-carousel {
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+
+  /* Make every category a horizontal scrollable flex row when active */
+  .carousel-category.active {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 1rem !important;
+    padding: 0.5rem 1rem 1.5rem 1rem !important;
+    margin: 0 !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .carousel-category.active::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Cards fixed width, no shrinking */
+  .pricing-card {
+    flex: 0 0 260px !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure no parent restricts overflow */
+  .pricing,
+  .pricing-carousel,
+  .carousel-category {
+    overflow: visible !important;
+  }
+}
+
