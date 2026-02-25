@@ -1,8 +1,5 @@
 // =============================================
-// TULLO – MASTER JAVASCRIPT (CONSOLIDATED)
-// All interactions: header, about spotlight, services,
-// pricing toggle, contact accordion, dynamic island,
-// glass tilt, testimonials infinite scroll.
+// TULLO – MASTER JAVASCRIPT (ALL INTERACTIONS)
 // =============================================
 (function() {
   'use strict';
@@ -28,24 +25,19 @@
   // ----- HEADER SCROLL EFFECT -----
   if (header) {
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+      header.classList.toggle('scrolled', window.scrollY > 40);
     });
   }
 
   // ----- ABOUT SPOTLIGHT + 3D TILT (desktop only) -----
   if (imageContainer && img && aboutSection) {
-    // Create spotlight element
     const spotlight = document.createElement('div');
     spotlight.className = 'spotlight';
     spotlight.style.left = '50%';
     spotlight.style.top = '50%';
     imageContainer.appendChild(spotlight);
 
-    const MAX_ROTATE = 9; // subtle tilt
+    const MAX_ROTATE = 9;
 
     function updateMouseEffects(e) {
       const rect = imageContainer.getBoundingClientRect();
@@ -58,7 +50,7 @@
       img.style.transition = 'none';
       img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-      // Spotlight follow
+      // spotlight follow
       const posX = e.clientX - rect.left;
       const posY = e.clientY - rect.top;
       spotlight.style.transition = 'none';
@@ -67,27 +59,25 @@
     }
 
     function resetEffects() {
-      img.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1)';
+      img.style.transition = 'transform 0.55s cubic-bezier(0.23,1,0.32,1)';
       img.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      spotlight.style.transition = 'left 0.55s cubic-bezier(0.23, 1, 0.32, 1), top 0.55s cubic-bezier(0.23, 1, 0.32, 1)';
+      spotlight.style.transition = 'left 0.55s, top 0.55s';
       spotlight.style.left = '50%';
       spotlight.style.top = '50%';
     }
 
-    // Only attach mouse events on non-touch devices
     if (!('ontouchstart' in window)) {
       imageContainer.addEventListener('mousemove', updateMouseEffects);
       imageContainer.addEventListener('mouseleave', resetEffects);
     } else {
-      // Touch fallback: no tilt, static spotlight
       img.style.transform = 'rotateX(0deg) rotateY(0deg)';
       spotlight.style.opacity = '0.5';
     }
 
-    // Intersection Observer for about section fade-in
+    // About fade-in on scroll
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             observer.unobserve(entry.target);
@@ -97,14 +87,12 @@
       { threshold: 0.18 }
     );
     observer.observe(aboutSection);
-
-    // Immediate check in case already visible
     if (aboutSection.getBoundingClientRect().top < window.innerHeight - 100) {
       aboutSection.classList.add('visible');
     }
   }
 
-  // ----- SERVICES FADE-IN (cards & header) -----
+  // ----- SERVICES FADE-IN -----
   const serviceElements = document.querySelectorAll('.services .service-card, .services-header, .brand-impact');
   if (serviceElements.length) {
     const serviceObserver = new IntersectionObserver(
@@ -113,7 +101,6 @@
           if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-            entry.target.style.transition = 'all 0.8s cubic-bezier(0.2,0.9,0.3,1)';
             serviceObserver.unobserve(entry.target);
           }
         });
@@ -127,24 +114,19 @@
     });
   }
 
-  // ----- PRICING TOGGLE (single implementation) -----
+  // ----- PRICING TOGGLE -----
   const toggleBtns = document.querySelectorAll('.toggle-btn');
   const categories = document.querySelectorAll('.carousel-category');
   if (toggleBtns.length && categories.length) {
     function activateCategory(categoryId) {
       toggleBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.category === categoryId));
       categories.forEach(cat => cat.classList.toggle('active', cat.dataset.category === categoryId));
-
-      // Update dynamic island if it exists
       if (island) {
         morphIsland(categoryId.charAt(0).toUpperCase() + categoryId.slice(1) + ' Plan', 'fas fa-tag');
       }
-
-      // Reset horizontal scroll for the newly active category
+      // reset scroll position
       categories.forEach(cat => {
-        if (cat.classList.contains('active')) {
-          cat.scrollLeft = 0;
-        }
+        if (cat.classList.contains('active')) cat.scrollLeft = 0;
       });
     }
 
@@ -156,7 +138,6 @@
       });
     });
 
-    // Set initial active category
     const activeBtn = document.querySelector('.toggle-btn.active') || toggleBtns[0];
     if (activeBtn) activateCategory(activeBtn.dataset.category);
   }
@@ -172,18 +153,14 @@
       if (headerBtn) {
         headerBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (group.classList.contains('open')) {
-            group.classList.remove('open');
-          } else {
-            closeAllExcept(group);
-            group.classList.add('open');
-          }
+          group.classList.toggle('open');
+          if (group.classList.contains('open')) closeAllExcept(group);
         });
       }
     });
   }
 
-  // ----- TESTIMONIALS INFINITE SCROLL (duplicate cards) -----
+  // ----- TESTIMONIALS INFINITE SCROLL -----
   const testimonialTrack = document.getElementById('testimonialsTrack');
   if (testimonialTrack && testimonialTrack.dataset.cloned !== 'true') {
     const originalCards = Array.from(testimonialTrack.children);
@@ -213,11 +190,11 @@
     }
   }
 
-  // ----- DYNAMIC ISLAND (only if element exists) -----
+  // ----- DYNAMIC ISLAND -----
   if (island && islandLabel && islandIcon) {
     let islandTimeout;
 
-    function morphIsland(text, iconClass) {
+    window.morphIsland = function(text, iconClass) {
       clearTimeout(islandTimeout);
       island.classList.remove('compress');
       island.classList.add('expand');
@@ -230,12 +207,9 @@
         islandLabel.textContent = 'Tullo Ready';
         islandIcon.className = 'fas fa-circle di-status';
       }, 1800);
-    }
+    };
 
-    // Expose morphIsland globally so other functions can call it (e.g., pricing toggle)
-    window.morphIsland = morphIsland;
-
-    // Section detection on scroll
+    // Section detection
     const sections = [
       { id: 'heroSection', text: 'Home', icon: 'fas fa-house' },
       { id: 'aboutSection', text: 'About', icon: 'fas fa-user' },
@@ -251,21 +225,19 @@
         if (!el) return;
         const rect = el.getBoundingClientRect();
         if (rect.top <= 140 && rect.bottom >= 140) {
-          morphIsland(section.text, section.icon);
+          window.morphIsland(section.text, section.icon);
         }
       });
     });
 
-    // CTA hover morph
+    // CTA hover
     const cta = document.querySelector('.header-cta');
     if (cta) {
-      cta.addEventListener('mouseenter', () => {
-        morphIsland('Get Started', 'fas fa-rocket');
-      });
+      cta.addEventListener('mouseenter', () => window.morphIsland('Get Started', 'fas fa-rocket'));
     }
   }
 
-  // ----- GLASS TILT EFFECT ON HOVER (for all glass elements) -----
+  // ----- GLASS TILT EFFECT -----
   const glassElements = document.querySelectorAll('.header-cta, .hero-cta, .btn, .header-icon a');
   glassElements.forEach(el => {
     el.addEventListener('mousemove', (e) => {
@@ -278,10 +250,8 @@
       const rotateY = (centerX - x) / 10;
       el.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
     });
-
     el.addEventListener('mouseleave', () => {
       el.style.transform = 'perspective(700px) rotateX(0) rotateY(0) scale(1)';
     });
   });
-
 })();
