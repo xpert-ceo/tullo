@@ -276,3 +276,62 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener('click', () => setTimeout(fixPricingScroll, 50));
   });
 })();
+
+
+// ===== ULTIMATE PRICING SCROLL FIX =====
+(function() {
+  function forcePricingScroll() {
+    if (window.innerWidth > 600) return;
+
+    const activeCategory = document.querySelector('.carousel-category.active');
+    if (!activeCategory) {
+      console.warn('No active pricing category found – check toggle');
+      return;
+    }
+
+    // Force styles directly
+    activeCategory.style.setProperty('display', 'flex', 'important');
+    activeCategory.style.setProperty('flex-direction', 'row', 'important');
+    activeCategory.style.setProperty('flex-wrap', 'nowrap', 'important');
+    activeCategory.style.setProperty('overflow-x', 'auto', 'important');
+    activeCategory.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
+    activeCategory.style.setProperty('scroll-snap-type', 'x mandatory', 'important');
+    activeCategory.style.setProperty('gap', '1rem', 'important');
+    activeCategory.style.setProperty('padding', '0.5rem 1rem 1.5rem 1rem', 'important');
+    activeCategory.style.setProperty('width', '100%', 'important');
+    activeCategory.style.setProperty('box-sizing', 'border-box', 'important');
+
+    // Force each card
+    activeCategory.querySelectorAll('.pricing-card').forEach(card => {
+      card.style.setProperty('flex', '0 0 260px', 'important');
+      card.style.setProperty('scroll-snap-align', 'start', 'important');
+      card.style.setProperty('margin', '0', 'important');
+    });
+
+    // Also force parent
+    const carousel = document.querySelector('.pricing-carousel');
+    if (carousel) {
+      carousel.style.setProperty('overflow', 'visible', 'important');
+    }
+
+    console.log('✅ Pricing scroll forced for category:', activeCategory.id);
+  }
+
+  // Run after load and on resize
+  window.addEventListener('load', forcePricingScroll);
+  window.addEventListener('resize', forcePricingScroll);
+
+  // Also run after any category change
+  document.querySelectorAll('.pricing-toggle .toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      setTimeout(forcePricingScroll, 100); // delay to allow class change
+    });
+  });
+
+  // Initial run in case DOM is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', forcePricingScroll);
+  } else {
+    forcePricingScroll();
+  }
+})();
