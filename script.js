@@ -1,337 +1,178 @@
-// ===== STICKY HEADER =====
-const header = document.querySelector("header");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 40) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
-});
-
-// ===== ABOUT SECTION – 3D TILT & SPOTLIGHT =====
+/***************************************
+ * TULLO – INTELLIGENT REDESIGN (OPTIMIZED)
+ ***************************************/
 (function() {
   'use strict';
 
-  const section = document.querySelector('.about');
-  const imageContainer = document.querySelector('.about-image');
-  const img = imageContainer?.querySelector('img');
+  // ----- THEME MANAGEMENT (system + manual toggle) -----
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  const headerLogo = document.getElementById('headerLogo');
+  const footerLogo = document.getElementById('footerLogo');
 
-  if (!imageContainer || !img || !section) return;
+  // set initial theme based on system or saved preference
+  const savedTheme = localStorage.getItem('tullo-theme');
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    body.classList.add(`theme-${savedTheme}`);
+  } else {
+    // system default
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    body.classList.add(systemDark ? 'theme-dark' : 'theme-light');
+  }
 
-  const spotlight = document.createElement('div');
-  spotlight.className = 'spotlight';
-  spotlight.style.left = '50%';
-  spotlight.style.top = '50%';
-  imageContainer.appendChild(spotlight);
+  themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('theme-dark')) {
+      body.classList.replace('theme-dark', 'theme-light');
+      localStorage.setItem('tullo-theme', 'light');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      body.classList.replace('theme-light', 'theme-dark');
+      localStorage.setItem('tullo-theme', 'dark');
+      themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+  });
+  // set initial icon
+  themeToggle.innerHTML = body.classList.contains('theme-dark') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
 
+  // ----- STICKY HEADER SCROLL EFFECT (clean) -----
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // ----- 3D TILT + SPOTLIGHT for all .tilt-container -----
+  const tiltContainers = document.querySelectorAll('.tilt-container');
   const MAX_ROTATE = 9;
 
-  function updateMouseEffects(e) {
-    const rect = imageContainer.getBoundingClientRect();
+  function updateTilt(e, container) {
+    const rect = container.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-
     const px = Math.min(Math.max(x, 0), 1);
     const py = Math.min(Math.max(y, 0), 1);
-
     const rotateY = (px - 0.5) * MAX_ROTATE * 1.6;
     const rotateX = (0.5 - py) * MAX_ROTATE * 1.6;
-
-    img.style.transition = 'none';
-    img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-    const posX = e.clientX - rect.left;
-    const posY = e.clientY - rect.top;
-    spotlight.style.transition = 'none';
-    spotlight.style.left = `${Math.min(Math.max(posX, 10), rect.width - 10)}px`;
-    spotlight.style.top = `${Math.min(Math.max(posY, 10), rect.height - 10)}px`;
+    const img = container.querySelector('img');
+    const spotlight = container.querySelector('.spotlight');
+    if (img) {
+      img.style.transition = 'none';
+      img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+    if (spotlight) {
+      const posX = e.clientX - rect.left;
+      const posY = e.clientY - rect.top;
+      spotlight.style.transition = 'none';
+      spotlight.style.left = `${Math.min(Math.max(posX, 10), rect.width - 10)}px`;
+      spotlight.style.top = `${Math.min(Math.max(posY, 10), rect.height - 10)}px`;
+    }
   }
 
-  function resetEffects() {
-    img.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1)';
-    img.style.transform = 'rotateX(0deg) rotateY(0deg)';
-
-    spotlight.style.transition = 'left 0.55s cubic-bezier(0.23, 1, 0.32, 1), top 0.55s cubic-bezier(0.23, 1, 0.32, 1)';
-    spotlight.style.left = '50%';
-    spotlight.style.top = '50%';
+  function resetTilt(container) {
+    const img = container.querySelector('img');
+    const spotlight = container.querySelector('.spotlight');
+    if (img) {
+      img.style.transition = 'transform 0.5s cubic-bezier(0.23,1,0.32,1)';
+      img.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    }
+    if (spotlight) {
+      spotlight.style.transition = 'left 0.5s, top 0.5s';
+      spotlight.style.left = '50%';
+      spotlight.style.top = '50%';
+    }
   }
 
-  imageContainer.addEventListener('mousemove', updateMouseEffects);
-  imageContainer.addEventListener('mouseleave', resetEffects);
+  tiltContainers.forEach(container => {
+    container.addEventListener('mousemove', (e) => updateTilt(e, container));
+    container.addEventListener('mouseleave', () => resetTilt(container));
+  });
 
+  // disable tilt on touch devices
   if ('ontouchstart' in window) {
-    imageContainer.removeEventListener('mousemove', updateMouseEffects);
-    imageContainer.removeEventListener('mouseleave', resetEffects);
-    img.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    spotlight.style.left = '50%';
-    spotlight.style.top = '50%';
-    spotlight.style.opacity = '0.5';
+    tiltContainers.forEach(container => {
+      container.removeEventListener('mousemove', updateTilt);
+      container.removeEventListener('mouseleave', resetTilt);
+    });
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.18 }
-  );
-  observer.observe(section);
+  // ----- DYNAMIC ISLAND (improved, intersection observer based) -----
+  const island = document.getElementById('dynamicIsland');
+  const label = document.getElementById('diLabel');
+  const icon = document.getElementById('diIcon');
+  let islandTimeout;
 
-  const rect = section.getBoundingClientRect();
-  if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
-    section.classList.add('visible');
+  function morphIsland(text, iconClass) {
+    clearTimeout(islandTimeout);
+    island.classList.remove('compress');
+    island.classList.add('expand');
+    label.textContent = text;
+    icon.className = iconClass + ' di-status';
+    islandTimeout = setTimeout(() => {
+      island.classList.remove('expand');
+      island.classList.add('compress');
+      label.textContent = 'Tullo';
+      icon.className = 'fas fa-circle di-status';
+    }, 2000);
   }
-})();
 
-// ===== SERVICES FADE-IN =====
-document.addEventListener("DOMContentLoaded", () => {
-  const elements = document.querySelectorAll(".services .service-card, .services-header, .brand-impact");
-  const observer = new IntersectionObserver((entries) => {
+  // section definitions with new IDs
+  const sections = [
+    { id: 'heroSection', text: 'Infrastructure', icon: 'fas fa-cloud' },
+    { id: 'whoSection', text: 'Clients', icon: 'fas fa-users' },
+    { id: 'systemsSection', text: 'Systems', icon: 'fas fa-microchip' },
+    { id: 'processSection', text: 'Process', icon: 'fas fa-cogs' },
+    { id: 'pricingSection', text: 'Pricing', icon: 'fas fa-tag' },
+    { id: 'testimonialsSection', text: 'Trust', icon: 'fas fa-star' },
+    { id: 'contactSection', text: 'Contact', icon: 'fas fa-envelope' }
+  ];
+
+  // use IntersectionObserver for smoother island updates (no scroll jitter)
+  const observerOptions = { threshold: 0.3, rootMargin: '-80px 0px -80px 0px' };
+  const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-        entry.target.style.transition = "all 0.8s cubic-bezier(0.2,0.9,0.3,1)";
+        const sectionId = entry.target.id;
+        const match = sections.find(s => s.id === sectionId);
+        if (match) morphIsland(match.text, match.icon);
       }
     });
-  }, { threshold: 0.2 });
+  }, observerOptions);
 
-  elements.forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    observer.observe(el);
-  });
-});
-
-// ===== DYNAMIC ISLAND =====
-const island = document.getElementById("dynamicIsland");
-const label = document.getElementById("diLabel");
-const icon = document.getElementById("diIcon");
-let islandTimeout;
-
-function morphIsland(text, iconClass) {
-  clearTimeout(islandTimeout);
-  island.classList.remove("compress");
-  island.classList.add("expand");
-  label.textContent = text;
-  icon.className = iconClass + " di-status";
-
-  islandTimeout = setTimeout(() => {
-    island.classList.remove("expand");
-    island.classList.add("compress");
-    label.textContent = "Tullo Ready";
-    icon.className = "fas fa-circle di-status";
-  }, 1800);
-}
-
-const sections = [
-  { id: "heroSection", text: "Home", icon: "fas fa-house" },
-  { id: "aboutSection", text: "About", icon: "fas fa-user" },
-  { id: "servicesSection", text: "Services", icon: "fas fa-layer-group" },
-  { id: "pricingSection", text: "Pricing", icon: "fas fa-tag" },
-  { id: "testimonialsSection", text: "Testimonials", icon: "fas fa-star" },
-  { id: "contactSection", text: "Contact", icon: "fas fa-envelope" }
-];
-
-window.addEventListener("scroll", () => {
-  sections.forEach(section => {
-    const el = document.getElementById(section.id);
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= 140 && rect.bottom >= 140) {
-      morphIsland(section.text, section.icon);
-    }
-  });
-});
-
-const cta = document.querySelector(".header-cta");
-cta?.addEventListener("mouseenter", () => {
-  morphIsland("Get Started", "fas fa-rocket");
-});
-
-// ===== 3D TILT ON GLASS ELEMENTS =====
-document.querySelectorAll(".header-cta, .hero-cta, .btn, .header-icon a").forEach(glass => {
-  glass.addEventListener("mousemove", e => {
-    const rect = glass.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    glass.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) sectionObserver.observe(el);
   });
 
-  glass.addEventListener("mouseleave", () => {
-    glass.style.transform = "perspective(700px) rotateX(0) rotateY(0) scale(1)";
-  });
-});
-
-// ===== PRICING TOGGLE =====
-document.addEventListener("DOMContentLoaded", () => {
-  const toggleButtons = document.querySelectorAll(".pricing-toggle .toggle-btn");
-  const categories = document.querySelectorAll(".carousel-category");
-
-  function setActiveCategory(categoryId) {
-    categories.forEach(cat => {
-      cat.classList.toggle("active", cat.id === categoryId);
-    });
-    toggleButtons.forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.category === categoryId);
-    });
-    morphIsland(`${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Plan`, "fas fa-tag");
-  }
-
-  toggleButtons.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      setActiveCategory(btn.dataset.category);
+  // ----- CTA morph (mouseenter) -----
+  document.querySelectorAll('.header-cta, .hero-cta, .system-cta, .who-cta').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      morphIsland('Let\'s talk', 'fas fa-rocket');
     });
   });
 
-  const defaultActive = document.querySelector(".toggle-btn.active")?.dataset.category || "web";
-  setActiveCategory(defaultActive);
-
-  categories.forEach(carousel => {
-    let isDown = false;
-    let startX, scrollLeft;
-
-    carousel.addEventListener("mousedown", (e) => {
-      isDown = true;
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-      carousel.style.cursor = "grabbing";
-    });
-
-    carousel.addEventListener("mouseleave", () => {
-      isDown = false;
-      carousel.style.cursor = "grab";
-    });
-
-    carousel.addEventListener("mouseup", () => {
-      isDown = false;
-      carousel.style.cursor = "grab";
-    });
-
-    carousel.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2;
-      carousel.scrollLeft = scrollLeft - walk;
-    });
-  });
-});
-
-// ===== CONTACT ACCORDION =====
-(function() {
+  // ----- CONTACT ACCORDION (clean) -----
   const groups = document.querySelectorAll('.contact-group');
-  if (groups.length === 0) return;
-
-  function closeAllExcept(current) {
-    groups.forEach(group => {
-      if (group !== current) group.classList.remove('open');
-    });
-  }
-
   groups.forEach(group => {
     const header = group.querySelector('.contact-header');
-    if (!header) return;
-
-    header.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (group.classList.contains('open')) {
-        group.classList.remove('open');
-      } else {
-        closeAllExcept(group);
-        group.classList.add('open');
-      }
-    });
-  });
-})();
-
-// ===== PRICING SCROLL FALLBACK (with logging) =====
-(function() {
-  function fixPricingScroll() {
-    if (window.innerWidth <= 600) {
-      const activeCategory = document.querySelector('.carousel-category.active');
-      if (activeCategory) {
-        activeCategory.style.overflowX = 'auto';
-        activeCategory.style.webkitOverflowScrolling = 'touch';
-        console.log('✅ Pricing scroll fix applied – active category:', activeCategory.id);
-      } else {
-        console.warn('⚠️ No active pricing category found');
-      }
-    }
-  }
-
-  window.addEventListener('load', fixPricingScroll);
-  window.addEventListener('resize', fixPricingScroll);
-
-  document.querySelectorAll('.pricing-toggle .toggle-btn').forEach(btn => {
-    btn.addEventListener('click', () => setTimeout(fixPricingScroll, 50));
-  });
-})();
-
-
-// ===== ULTIMATE PRICING SCROLL FIX =====
-(function() {
-  function forcePricingScroll() {
-    if (window.innerWidth > 600) return;
-
-    const activeCategory = document.querySelector('.carousel-category.active');
-    if (!activeCategory) {
-      console.warn('No active pricing category found – check toggle');
-      return;
-    }
-
-    // Force styles directly
-    activeCategory.style.setProperty('display', 'flex', 'important');
-    activeCategory.style.setProperty('flex-direction', 'row', 'important');
-    activeCategory.style.setProperty('flex-wrap', 'nowrap', 'important');
-    activeCategory.style.setProperty('overflow-x', 'auto', 'important');
-    activeCategory.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
-    activeCategory.style.setProperty('scroll-snap-type', 'x mandatory', 'important');
-    activeCategory.style.setProperty('gap', '1rem', 'important');
-    activeCategory.style.setProperty('padding', '0.5rem 1rem 1.5rem 1rem', 'important');
-    activeCategory.style.setProperty('width', '100%', 'important');
-    activeCategory.style.setProperty('box-sizing', 'border-box', 'important');
-
-    // Force each card
-    activeCategory.querySelectorAll('.pricing-card').forEach(card => {
-      card.style.setProperty('flex', '0 0 260px', 'important');
-      card.style.setProperty('scroll-snap-align', 'start', 'important');
-      card.style.setProperty('margin', '0', 'important');
-    });
-
-    // Also force parent
-    const carousel = document.querySelector('.pricing-carousel');
-    if (carousel) {
-      carousel.style.setProperty('overflow', 'visible', 'important');
-    }
-
-    console.log('✅ Pricing scroll forced for category:', activeCategory.id);
-  }
-
-  // Run after load and on resize
-  window.addEventListener('load', forcePricingScroll);
-  window.addEventListener('resize', forcePricingScroll);
-
-  // Also run after any category change
-  document.querySelectorAll('.pricing-toggle .toggle-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      setTimeout(forcePricingScroll, 100); // delay to allow class change
+    header.addEventListener('click', () => {
+      const isOpen = group.classList.contains('open');
+      groups.forEach(g => g.classList.remove('open'));
+      if (!isOpen) group.classList.add('open');
     });
   });
 
-  // Initial run in case DOM is already loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', forcePricingScroll);
-  } else {
-    forcePricingScroll();
+  // ----- PRICING CAROUSEL MOBILE (no toggles, just grid + horizontal scroll) -----
+  // already handled by CSS grid + overflow. add smooth snap on mobile
+  const pricingCards = document.querySelectorAll('.pricing-grid, .maintenance-grid');
+  pricingCards.forEach(grid => {
+    grid.style.scrollSnapType = 'x mandatory';
+  });
+
+  // ----- TESTIMONIALS INFINITE SCROLL (duplicate if needed) -----
+  const track = document.getElementById('testimonialsTrack');
+  if (track) {
+    // ensure enough items for seamless loop (already duplicated in html)
   }
+
+  // ----- REMOVE REDUNDANT SCROLL FIXES, all observers used -----
+  console.log('Tullo · infrastructure studio ready');
 })();
