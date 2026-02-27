@@ -4,19 +4,257 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tullo · digital infrastructure studio</title>
-  <!-- favicon -->
   <link rel="icon" href="./Assets/logo-black-nobg.png" type="image/png">
-  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&display=swap" rel="stylesheet">
-  <!-- main style (embedded after, but we link for clarity – will be fully in answer) -->
-  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* ----- GLOBAL DESIGN TOKENS (upgraded light mode) ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #070c14;
+      --bg-surface: rgba(10, 15, 25, 0.75);
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: rgba(235, 245, 255, 0.92);
+      --text-secondary: rgba(210, 230, 255, 0.7);
+      --accent-1: #7c7cff;
+      --accent-2: #5eead4;
+      --gradient-1: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      --shadow-glass: 0 20px 35px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+      --logo-filter: none;
+      --island-top: 20px;
+      --header-top: 90px;
+    }
+    /* light mode – completely redesigned for premium brightness */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-deep: #f4f7fb;
+        --bg-surface: rgba(255, 255, 255, 0.7);
+        --glass-bg: rgba(255, 255, 255, 0.5);
+        --glass-border: rgba(0, 20, 50, 0.1);
+        --text-primary: #0a1a2b;
+        --text-secondary: #1f3a5f;
+        --accent-1: #5c5cd6;
+        --accent-2: #2fa0a0;
+        --gradient-1: linear-gradient(135deg, #5c5cd6, #2fa0a0);
+        --shadow-glass: 0 15px 30px -10px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.7);
+        --logo-filter: brightness(0.2);
+      }
+    }
+    body.theme-light {
+      --bg-deep: #f4f7fb;
+      --bg-surface: rgba(255, 255, 255, 0.7);
+      --glass-bg: rgba(255, 255, 255, 0.5);
+      --glass-border: rgba(0, 20, 50, 0.1);
+      --text-primary: #0a1a2b;
+      --text-secondary: #1f3a5f;
+      --accent-1: #5c5cd6;
+      --accent-2: #2fa0a0;
+      --gradient-1: linear-gradient(135deg, #5c5cd6, #2fa0a0);
+      --shadow-glass: 0 15px 30px -10px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.7);
+      --logo-filter: brightness(0.2);
+    }
+    body.theme-dark {
+      --bg-deep: #070c14;
+      --bg-surface: rgba(10, 15, 25, 0.75);
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: rgba(235, 245, 255, 0.92);
+      --text-secondary: rgba(210, 230, 255, 0.7);
+      --accent-1: #7c7cff;
+      --accent-2: #5eead4;
+      --gradient-1: linear-gradient(135deg, #7c7cff, #5eead4);
+      --shadow-glass: 0 20px 35px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+      --logo-filter: none;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background 0.2s, color 0.2s;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* ----- DYNAMIC ISLAND (spaced from nav) ----- */
+    .dynamic-island {
+      position: fixed;
+      top: var(--island-top);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      height: 42px;
+      width: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(24px);
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: width 0.7s cubic-bezier(0.34,1.56,0.64,1), border-radius 0.5s, background 0.3s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .dynamic-island.expand { width: 250px; border-radius: 30px; }
+    .dynamic-island.compress { width: 150px; }
+    .di-container { display: flex; align-items: center; gap: 10px; }
+    .di-status { font-size: 12px; color: #5eead4; animation: pulse 2s infinite; }
+    .di-label { color: white; font-size: 14px; font-weight: 500; opacity: 0.95; }
+    @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.5; transform: scale(0.9); } }
+
+    /* ----- HEADER (responsive + bookmarks) ----- */
+    header {
+      position: sticky;
+      top: var(--header-top);
+      z-index: 999;
+      width: 92%;
+      max-width: 1300px;
+      margin: 0 auto 20px;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1.2rem;
+      background: var(--bg-surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      transition: all 0.3s;
+    }
+    header.scrolled { width: 78%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .header-logo { height: 40px; transform: scale(2.15); transform-origin: left center; filter: var(--logo-filter); }
+    /* desktop nav */
+    .header-nav { display: flex; align-items: center; gap: 1.5rem; margin-left: 1rem; }
+    .header-nav a { color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 0.95rem; opacity: 0.9; transition: 0.2s; }
+    .header-nav a:hover { color: var(--accent-2); }
+    .header-actions { display: flex; align-items: center; gap: 0.8rem; }
+    .header-icon, .theme-toggle {
+      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border); box-shadow: var(--shadow-glass);
+      transition: 0.2s; color: var(--text-primary); cursor: pointer;
+    }
+    .header-icon:hover, .theme-toggle:hover { transform: scale(1.15); background: rgba(124,124,255,0.2); }
+    .header-cta {
+      padding: 0.7rem 1.6rem; border-radius: 999px; background: rgba(94,234,212,0.12);
+      border: 1px solid rgba(94,234,212,0.35); color: var(--text-primary); font-weight: 600;
+      backdrop-filter: blur(12px); white-space: nowrap;
+    }
+    .header-cta:hover { background: var(--gradient-1); color: #0a0a0a; }
+    /* mobile menu */
+    .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+    .mobile-menu-toggle span { width: 24px; height: 2px; background: var(--text-primary); transition: 0.2s; }
+    @media (max-width: 860px) {
+      .header-nav { display: none; }
+      .mobile-menu-toggle { display: flex; }
+      .header-nav.mobile-open { display: flex; flex-direction: column; position: absolute; top: 70px; left: 5%; right: 5%; background: var(--bg-surface); backdrop-filter: blur(20px); border-radius: 24px; padding: 1.5rem; border: 1px solid var(--glass-border); gap: 1rem; }
+      .header-cta { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+      .header-logo { transform: scale(1.2); }
+    }
+
+    /* ----- HERO, WHO, etc (keep previous design but with updated tokens) ----- */
+    .hero { min-height: 100vh; margin-top: -84px; padding-top: 84px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.7)), url('./Assets/designbg-1.png') fixed center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding-inline: 1.2rem; }
+    .hero-h1 { font-size: clamp(2.8rem, 7vw, 5.2rem); font-weight: 700; line-height: 1.1; max-width: 1000px; }
+    .hero-h1 span { background: var(--gradient-1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-sub { font-size: 1.4rem; margin-top: 1.5rem; color: rgba(255,255,255,0.85); }
+    .hero-actions { margin-top: 2.5rem; display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+    .hero-cta { padding: 1rem 2.4rem; border-radius: 999px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+    .hero-cta.primary { background: var(--gradient-1); color: #0b0d12; border: 1px solid rgba(255,255,255,0.3); }
+    .hero-cta.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+    .trust-indicators { margin-top: 3rem; display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; font-size: 0.95rem; color: rgba(255,255,255,0.7); }
+    .trust-indicators i { margin-right: 0.5rem; color: var(--accent-2); }
+
+    /* who section */
+    .who-section { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; }
+    .section-title { font-size: clamp(2.2rem,5vw,3.2rem); font-weight: 600; letter-spacing: -0.02em; background: var(--gradient-1); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; margin-bottom: 3rem; }
+    .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .who-card { padding: 2.5rem; background: var(--glass-bg); backdrop-filter: blur(18px); border: 1px solid var(--glass-border); border-radius: 32px; }
+    .who-icon { font-size: 2.8rem; background: var(--gradient-1); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
+    .who-card h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary); }
+    .who-desc { color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .who-bullets { list-style: none; margin-bottom: 2rem; }
+    .who-bullets li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; color: var(--text-secondary); }
+    .who-bullets li::before { content: "▹"; position: absolute; left: 0; color: var(--accent-2); }
+    .who-cta { text-decoration: none; color: var(--accent-1); font-weight: 600; border-bottom: 1px dashed; }
+
+    /* systems – unique image / svg replacement */
+    .systems-section { max-width: 1300px; margin: 0 auto; padding: 2rem 2rem 6rem; }
+    .system-block { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem; }
+    .system-block.reverse { direction: rtl; }
+    .system-block.reverse .system-content { direction: ltr; }
+    .system-image { position: relative; border-radius: 32px; overflow: hidden; perspective: 1200px; transform-style: preserve-3d; box-shadow: 0 25px 40px -15px black; min-height: 300px; background: var(--glass-bg); display: flex; align-items: center; justify-content: center; }
+    .system-image img { width: 100%; height: auto; display: block; border-radius: 28px; }
+    .svg-placeholder { width: 80%; height: auto; color: var(--accent-1); opacity: 0.8; }
+    .spotlight { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(124,124,255,0.2), transparent 70%); transform: translate(-50%, -50%); pointer-events: none; mix-blend-mode: soft-light; transition: left 0.2s, top 0.2s; }
+    .system-content h3 { font-size: 2.2rem; margin-bottom: 1.5rem; background: var(--gradient-1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .system-content p { margin-bottom: 1rem; color: var(--text-secondary); }
+    .system-cta { display: inline-block; margin-top: 1.5rem; padding: 0.8rem 2rem; border-radius: 40px; background: var(--glass-bg); border: 1px solid var(--glass-border); text-decoration: none; color: var(--text-primary); transition: 0.2s; }
+    .system-cta:hover { background: rgba(124,124,255,0.2); }
+
+    /* process */
+    .process-section { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8rem; }
+    .process-card { padding: 2rem 1.5rem; text-align: center; background: var(--glass-bg); backdrop-filter: blur(18px); border: 1px solid var(--glass-border); border-radius: 32px; }
+    .process-icon { font-size: 2.2rem; margin-bottom: 1rem; color: var(--accent-2); }
+
+    /* pricing with multiple currencies */
+    .pricing-section { max-width: 1300px; margin: 0 auto; padding: 4rem 2rem; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8rem; margin-bottom: 4rem; }
+    .pricing-card { padding: 2rem; background: var(--glass-bg); backdrop-filter: blur(18px); border: 1px solid var(--glass-border); border-radius: 32px; }
+    .pricing-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
+    .price { font-size: 2rem; font-weight: 600; margin-bottom: 1rem; color: var(--accent-2); }
+    .price small { font-size: 0.9rem; font-weight: 400; color: var(--text-secondary); display: block; }
+    .features { list-style: none; margin-bottom: 1.5rem; }
+    .features li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; color: var(--text-secondary); }
+    .features li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-2); }
+    .maintenance-section { margin-top: 4rem; }
+    .maintenance-title { font-size: 1.8rem; text-align: center; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .badge { background: var(--accent-1); color: black; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.9rem; font-weight: 500; }
+    .maintenance-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8rem; }
+    .maintenance-card { padding: 2rem; background: var(--glass-bg); backdrop-filter: blur(18px); border: 1px solid var(--glass-border); border-radius: 32px; }
+    .maintenance-note { text-align: center; margin-top: 2rem; font-style: italic; color: var(--text-secondary); }
+
+    /* testimonials – exactly as before (infinite marquee) */
+    .testimonials { max-width: 1400px; margin: 4rem auto; overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent); }
+    .testimonials-track { display: flex; gap: 1.5rem; width: max-content; animation: scroll 40s linear infinite; will-change: transform; }
+    .testimonials:hover .testimonials-track { animation-play-state: paused; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .testimonial-card { width: 340px; flex-shrink: 0; padding: 2rem; background: var(--glass-bg); backdrop-filter: blur(18px); border: 1px solid var(--glass-border); border-radius: 32px; }
+    .t-n { display: flex; align-items: center; gap: 0.8rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary); }
+    .t-avatar { width: 44px; height: 44px; background: var(--accent-1); border-radius: 40% 60% 40% 60%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; }
+    .t-body { color: var(--text-secondary); }
+
+    /* contact & footer */
+    .contact { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+    .contact-subtitle { text-align: center; font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary); }
+    .contact-container { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-group { border-radius: 32px; overflow: hidden; background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); }
+    .contact-header { width: 100%; padding: 1.5rem 2rem; background: transparent; border: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary); font-size: 1.4rem; font-weight: 500; cursor: pointer; }
+    .contact-links { max-height: 0; opacity: 0; overflow: hidden; transition: 0.4s; padding: 0 2rem; }
+    .contact-group.open .contact-links { max-height: 250px; opacity: 1; padding: 0 2rem 2rem; }
+    .contact-btn { display: inline-block; padding: 1rem 2rem; border-radius: 40px; text-decoration: none; font-weight: 500; margin: 0.5rem 0; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); }
+    .footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--glass-border); background: var(--bg-surface); backdrop-filter: blur(12px); border-radius: 3rem 3rem 0 0; }
+    .footer-logo { height: 50px; margin-bottom: 1.5rem; filter: var(--logo-filter); }
+    .footer-icon { display: flex; gap: 1.2rem; justify-content: center; margin-bottom: 1.5rem; }
+    .footer-icon a { width: 48px; height: 48px; border-radius: 50%; background: var(--glass-bg); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; color: var(--text-primary); transition: 0.2s; }
+
+    /* mobile responsiveness */
+    @media (max-width: 1024px) {
+      .who-grid, .system-block, .pricing-grid, .maintenance-grid, .process-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .process-grid { grid-template-columns: repeat(2,1fr); }
+      .pricing-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 680px) {
+      .process-grid, .pricing-grid, .maintenance-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .dynamic-island { top: 10px; }
+      header { top: 70px; }
+    }
+    @media (prefers-reduced-motion) { * { animation: none !important; transition: none !important; } }
+  </style>
 </head>
 <body class="theme-system">
-  <!-- DYNAMIC ISLAND (topmost) -->
   <div class="dynamic-island" id="dynamicIsland">
     <div class="di-container">
       <i class="fas fa-circle di-status" id="diIcon"></i>
@@ -24,19 +262,29 @@
     </div>
   </div>
 
-  <!-- STICKY HEADER with theme toggle -->
-  <header class="main-header">
-    <img src="./Assets/logo-white-nobg.png" alt="Tullo Agency Logo" class="header-logo" id="headerLogo">
-    <nav class="header-icon">
-      <a href="https://www.tiktok.com/@tulloagency" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://www.instagram.com/tulloagency" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <!-- theme toggle -->
-      <button class="theme-toggle" id="themeToggle" aria-label="switch theme"><i class="fas fa-moon"></i></button>
+  <header class="main-header" id="mainHeader">
+    <img src="./Assets/logo-white-nobg.png" alt="Tullo" class="header-logo">
+    
+    <!-- desktop navigation (bookmarks) -->
+    <nav class="header-nav" id="headerNav">
+      <a href="#systemsSection">Systems</a>
+      <a href="#processSection">Process</a>
+      <a href="#pricingSection">Pricing</a>
+      <a href="#contactSection">Contact</a>
     </nav>
-    <a href="#pricingSection" class="header-cta">Build My System</a>
+
+    <div class="header-actions">
+      <a href="https://www.tiktok.com/@tulloagency" class="header-icon"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/tulloagency" class="header-icon"><i class="fa-brands fa-instagram"></i></a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Theme"><i class="fas fa-moon"></i></button>
+      <a href="#contactSection" class="header-cta">Build My System</a>
+      <!-- mobile toggle -->
+      <div class="mobile-menu-toggle" id="mobileToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </header>
 
-  <!-- HERO SECTION -->
   <section class="hero" id="heroSection">
     <h1 class="hero-h1">We engineer digital infrastructure <span>for brands that scale</span></h1>
     <p class="hero-sub">with clarity, automation, and authority.</p>
@@ -51,12 +299,10 @@
     </div>
   </section>
 
-  <!-- WHO WE WORK WITH (two glass cards) -->
   <section class="who-section" id="whoSection">
     <h2 class="section-title">Who we work with</h2>
     <div class="who-grid">
-      <!-- card: businesses -->
-      <article class="who-card glass-card">
+      <article class="who-card">
         <div class="who-icon"><i class="fas fa-building"></i></div>
         <h3>For Businesses</h3>
         <p class="who-desc">We build scalable digital infrastructure, automation pipelines, and structured brand ecosystems.</p>
@@ -67,8 +313,7 @@
         </ul>
         <a href="#systemsSection" class="who-cta">Build your stack →</a>
       </article>
-      <!-- card: creators -->
-      <article class="who-card glass-card">
+      <article class="who-card">
         <div class="who-icon"><i class="fas fa-microphone"></i></div>
         <h3>For Creators</h3>
         <p class="who-desc">We build monetizable personal brands with digital systems, design identity, and automation layers.</p>
@@ -82,11 +327,9 @@
     </div>
   </section>
 
-  <!-- OUR DIGITAL SYSTEMS (4 blocks, alternating) -->
   <section class="systems-section" id="systemsSection">
     <h2 class="section-title">Our digital systems</h2>
-    
-    <!-- 1. Brand Identity System (image left) -->
+    <!-- system 1: brand identity (with actual image) -->
     <div class="system-block">
       <div class="system-image tilt-container" id="tilt1">
         <img src="./Assets/about-img.png" alt="Brand Identity" class="tilt-img">
@@ -95,14 +338,13 @@
       <div class="system-content">
         <h3>Brand Identity System</h3>
         <p class="system-problem">The problem: inconsistent visuals, weak recognition, no trust.</p>
-        <p class="system-engineer">We engineer: strategic brand architecture, logo systems, typography, color language, and full guidelines.</p>
+        <p class="system-engineer">We engineer: strategic brand architecture, logo systems, typography, color language, full guidelines.</p>
         <p class="system-outcome">Outcome: instant recognition, premium perception, cohesive narrative.</p>
         <p class="system-audience">Built for: businesses and creators entering scale phase.</p>
         <a href="#pricingSection" class="system-cta">Explore pricing →</a>
       </div>
     </div>
-
-    <!-- 2. Digital Presence System (image right) -->
+    <!-- system 2: digital presence (SVG glass shape) -->
     <div class="system-block reverse">
       <div class="system-content">
         <h3>Digital Presence System</h3>
@@ -113,28 +355,35 @@
         <a href="#pricingSection" class="system-cta">Explore pricing →</a>
       </div>
       <div class="system-image tilt-container" id="tilt2">
-        <img src="./Assets/about-img.png" alt="Digital Presence" class="tilt-img">
+        <svg class="svg-placeholder" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c7cff" stop-opacity="0.8"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0.8"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="url(#grad1)" stroke-width="4" stroke-dasharray="10 10"/>
+          <rect x="60" y="60" width="80" height="80" rx="16" fill="url(#grad1)" opacity="0.3" />
+          <circle cx="100" cy="100" r="30" fill="url(#grad1)" opacity="0.6" />
+        </svg>
         <div class="spotlight"></div>
       </div>
     </div>
-
-    <!-- 3. Content & Motion Engine (image left) -->
+    <!-- system 3: content & motion (SVG) -->
     <div class="system-block">
       <div class="system-image tilt-container" id="tilt3">
-        <img src="./Assets/about-img.png" alt="Content Engine" class="tilt-img">
+        <svg class="svg-placeholder" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="100,20 160,70 160,140 100,180 40,140 40,70" fill="none" stroke="url(#grad1)" stroke-width="4" />
+          <circle cx="100" cy="100" r="30" fill="url(#grad1)" opacity="0.5" />
+          <line x1="40" y1="70" x2="160" y2="140" stroke="url(#grad1)" stroke-width="3" stroke-dasharray="5 5"/>
+        </svg>
         <div class="spotlight"></div>
       </div>
       <div class="system-content">
         <h3>Content & Motion Engine</h3>
         <p class="system-problem">The problem: inconsistent content, low engagement, brand dilution.</p>
-        <p class="system-engineer">We engineer: motion design systems, video workflows, social templates, and automated content pipelines.</p>
+        <p class="system-engineer">We engineer: motion design systems, video workflows, social templates, automated content pipelines.</p>
         <p class="system-outcome">Outcome: 5x content output, unified aesthetic, viral potential.</p>
         <p class="system-audience">Built for: creators, media brands, marketing teams.</p>
         <a href="#pricingSection" class="system-cta">Explore pricing →</a>
       </div>
     </div>
-
-    <!-- 4. AI Automation System (image right) -->
+    <!-- system 4: AI automation (SVG) -->
     <div class="system-block reverse">
       <div class="system-content">
         <h3>AI Automation System</h3>
@@ -145,180 +394,78 @@
         <a href="#pricingSection" class="system-cta">Explore pricing →</a>
       </div>
       <div class="system-image tilt-container" id="tilt4">
-        <img src="./Assets/about-img.png" alt="AI Automation" class="tilt-img">
+        <svg class="svg-placeholder" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="80" r="30" fill="none" stroke="url(#grad1)" stroke-width="4"/>
+          <circle cx="60" cy="140" r="25" fill="none" stroke="url(#grad1)" stroke-width="4"/>
+          <circle cx="140" cy="140" r="25" fill="none" stroke="url(#grad1)" stroke-width="4"/>
+          <path d="M100 110 L70 140 M100 110 L130 140" stroke="url(#grad1)" stroke-width="3"/>
+        </svg>
         <div class="spotlight"></div>
       </div>
     </div>
   </section>
 
-  <!-- PROCESS SECTION (4 steps) -->
   <section class="process-section" id="processSection">
     <h2 class="section-title">Our engineering process</h2>
     <div class="process-grid">
-      <div class="process-card glass-card">
-        <div class="process-icon"><i class="fas fa-search"></i></div>
-        <h3>Diagnose</h3>
-        <p>We audit your current infrastructure, identify bottlenecks, and define clear system requirements.</p>
-      </div>
-      <div class="process-card glass-card">
-        <div class="process-icon"><i class="fas fa-cubes"></i></div>
-        <h3>Architect</h3>
-        <p>Modular blueprints, tech stack selection, and scalable information architecture.</p>
-      </div>
-      <div class="process-card glass-card">
-        <div class="process-icon"><i class="fas fa-rocket"></i></div>
-        <h3>Deploy</h3>
-        <p>Iterative build, continuous integration, and secure launch with zero downtime.</p>
-      </div>
-      <div class="process-card glass-card">
-        <div class="process-icon"><i class="fas fa-chart-line"></i></div>
-        <h3>Optimize</h3>
-        <p>Performance monitoring, automated updates, and quarterly growth audits.</p>
-      </div>
+      <div class="process-card"><div class="process-icon"><i class="fas fa-search"></i></div><h3>Diagnose</h3><p>We audit your current infrastructure, identify bottlenecks, and define clear system requirements.</p></div>
+      <div class="process-card"><div class="process-icon"><i class="fas fa-cubes"></i></div><h3>Architect</h3><p>Modular blueprints, tech stack selection, and scalable information architecture.</p></div>
+      <div class="process-card"><div class="process-icon"><i class="fas fa-rocket"></i></div><h3>Deploy</h3><p>Iterative build, continuous integration, and secure launch with zero downtime.</p></div>
+      <div class="process-card"><div class="process-icon"><i class="fas fa-chart-line"></i></div><h3>Optimize</h3><p>Performance monitoring, automated updates, and quarterly growth audits.</p></div>
     </div>
   </section>
 
-  <!-- PRICING & MAINTENANCE (rebuilt) -->
   <section class="pricing-section" id="pricingSection">
-    <h2 class="section-title">System pricing</h2>
-    <!-- system packages grid -->
+    <h2 class="section-title">System pricing · global rates</h2>
     <div class="pricing-grid">
-      <div class="pricing-card glass-card">
-        <h3>Brand Identity System</h3>
-        <p class="price">$3,200 <span>USD</span></p>
-        <ul class="features">
-          <li>Logo + lockups</li>
-          <li>Typography & color</li>
-          <li>Brand guidelines PDF</li>
-          <li>Asset library</li>
-        </ul>
-        <p class="payment-info">one‑time · source files included</p>
-      </div>
-      <div class="pricing-card glass-card">
-        <h3>Digital Presence System</h3>
-        <p class="price">$8,500 <span>USD</span></p>
-        <ul class="features">
-          <li>Custom website / web app</li>
-          <li>CMS / booking integration</li>
-          <li>SEO & analytics</li>
-          <li>Enterprise hosting</li>
-        </ul>
-        <p class="payment-info">starting at · 50% upfront</p>
-      </div>
-      <div class="pricing-card glass-card">
-        <h3>AI Automation System</h3>
-        <p class="price">$12,000 <span>USD</span></p>
-        <ul class="features">
-          <li>Custom AI agents (2‑3)</li>
-          <li>Workflow automation</li>
-          <li>CRM/ERP integration</li>
-          <li>Analytics dashboard</li>
-        </ul>
-        <p class="payment-info">milestone‑based · includes training</p>
-      </div>
-      <div class="pricing-card glass-card">
-        <h3>Full Infrastructure Build</h3>
-        <p class="price">Custom</p>
-        <ul class="features">
-          <li>All systems integrated</li>
-          <li>Dedicated solution architect</li>
-          <li>Scalable cloud infrastructure</li>
-          <li>24/7 support</li>
-        </ul>
-        <p class="payment-info">tailored quote · enterprise SLA</p>
-      </div>
+      <div class="pricing-card"><h3>Brand Identity</h3><div class="price">$3,200 <small>USD · ₦4.8M · €2,950</small></div><ul class="features"><li>Logo + lockups</li><li>Typography & color</li><li>Brand guidelines PDF</li><li>Asset library</li></ul></div>
+      <div class="pricing-card"><h3>Digital Presence</h3><div class="price">$8,500 <small>USD · ₦12.8M · €7,800</small></div><ul class="features"><li>Custom website / web app</li><li>CMS / booking integration</li><li>SEO & analytics</li><li>Enterprise hosting</li></ul></div>
+      <div class="pricing-card"><h3>AI Automation</h3><div class="price">$12,000 <small>USD · ₦18M · €11,000</small></div><ul class="features"><li>Custom AI agents (2‑3)</li><li>Workflow automation</li><li>CRM/ERP integration</li><li>Analytics dashboard</li></ul></div>
+      <div class="pricing-card"><h3>Full Infrastructure</h3><div class="price">Custom <small>USD / NGN / EUR</small></div><ul class="features"><li>All systems integrated</li><li>Dedicated solution architect</li><li>Scalable cloud infrastructure</li><li>24/7 support</li></ul></div>
     </div>
-
-    <!-- maintenance plans (subscription) -->
     <div class="maintenance-section">
       <h3 class="maintenance-title">Maintenance & optimization plans <span class="badge">subscription required</span></h3>
       <div class="maintenance-grid">
-        <div class="maintenance-card glass-card">
-          <h4>Digital Maintenance</h4>
-          <p class="price">$450 <span>/month</span></p>
-          <ul>
-            <li>Weekly backups & updates</li>
-            <li>Security patches</li>
-            <li>Performance monitoring</li>
-          </ul>
-        </div>
-        <div class="maintenance-card glass-card">
-          <h4>Growth Maintenance</h4>
-          <p class="price">$1,200 <span>/month</span></p>
-          <ul>
-            <li>Everything in Digital</li>
-            <li>Content updates (4h/month)</li>
-            <li>Quarterly conversion audit</li>
-          </ul>
-        </div>
-        <div class="maintenance-card glass-card">
-          <h4>Infrastructure Maintenance</h4>
-          <p class="price">$2,500+ <span>/month</span></p>
-          <ul>
-            <li>24/7 system monitoring</li>
-            <li>AI agent retraining</li>
-            <li>Dedicated support engineer</li>
-          </ul>
-        </div>
+        <div class="maintenance-card"><h4>Digital Maintenance</h4><div class="price">$450 <small>/month · ₦675k · €415</small></div><ul><li>Weekly backups & updates</li><li>Security patches</li><li>Performance monitoring</li></ul></div>
+        <div class="maintenance-card"><h4>Growth Maintenance</h4><div class="price">$1,200 <small>/month · ₦1.8M · €1,100</small></div><ul><li>Everything in Digital</li><li>Content updates (4h/month)</li><li>Quarterly conversion audit</li></ul></div>
+        <div class="maintenance-card"><h4>Infrastructure Maintenance</h4><div class="price">$2,500+ <small>/month · ₦3.75M+ · €2,300+</small></div><ul><li>24/7 system monitoring</li><li>AI agent retraining</li><li>Dedicated support engineer</li></ul></div>
       </div>
       <p class="maintenance-note">All systems require an active maintenance plan for optimization & security.</p>
     </div>
   </section>
 
-  <!-- TESTIMONIALS (keep existing but with updated copy) -->
+  <!-- TESTIMONIALS (exactly as before) -->
   <section class="testimonials" id="testimonialsSection">
     <h2 class="section-title">Trusted by engineering leaders</h2>
     <div class="testimonials-marquee">
       <div class="testimonials-track" id="testimonialsTrack">
-        <article class="testimonial-card glass-card">
-          <p class="t-n"><span class="t-avatar">S</span>Sarah Mitchell, CTO</p>
-          <p class="t-body">“Tullo engineered our entire brand infrastructure — from identity to AI workflows. We scaled 300% without friction.”</p>
-        </article>
-        <article class="testimonial-card glass-card">
-          <p class="t-n"><span class="t-avatar">J</span>James O’Connor, Founder</p>
-          <p class="t-body">“The digital presence system they built converts at 11%. Our old site was at 2%. That’s infrastructure.”</p>
-        </article>
-        <article class="testimonial-card glass-card">
-          <p class="t-n"><span class="t-avatar">A</span>Adebayo Kolawole, CEO</p>
-          <p class="t-body">“Full infrastructure build + maintenance. We now operate with 40% less overhead, fully automated.”</p>
-        </article>
-        <article class="testimonial-card glass-card">
-          <p class="t-n"><span class="t-avatar">D</span>Daniel Reyes, Creator</p>
-          <p class="t-body">“My content engine runs itself. Motion templates + scheduling AI saved my team.”</p>
-        </article>
-        <!-- duplicate for seamless scroll -->
-        <article class="testimonial-card glass-card">
-          <p class="t-n"><span class="t-avatar">S</span>Sarah Mitchell, CTO</p>
-          <p class="t-body">“Tullo engineered our entire brand infrastructure — from identity to AI workflows. We scaled 300% without friction.”</p>
-        </article>
+        <article class="testimonial-card"><p class="t-n"><span class="t-avatar">S</span>Sarah Mitchell, CTO</p><p class="t-body">“Tullo engineered our entire brand infrastructure — from identity to AI workflows. We scaled 300% without friction.”</p></article>
+        <article class="testimonial-card"><p class="t-n"><span class="t-avatar">J</span>James O’Connor, Founder</p><p class="t-body">“The digital presence system they built converts at 11%. Our old site was at 2%. That’s infrastructure.”</p></article>
+        <article class="testimonial-card"><p class="t-n"><span class="t-avatar">A</span>Adebayo Kolawole, CEO</p><p class="t-body">“Full infrastructure build + maintenance. We now operate with 40% less overhead, fully automated.”</p></article>
+        <article class="testimonial-card"><p class="t-n"><span class="t-avatar">D</span>Daniel Reyes, Creator</p><p class="t-body">“My content engine runs itself. Motion templates + scheduling AI saved my team.”</p></article>
+        <!-- duplicate for seamless loop -->
+        <article class="testimonial-card"><p class="t-n"><span class="t-avatar">S</span>Sarah Mitchell, CTO</p><p class="t-body">“Tullo engineered our entire brand infrastructure — from identity to AI workflows. We scaled 300% without friction.”</p></article>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT + FOOTER (same structure, refined copy) -->
   <section class="contact" id="contactSection">
     <h2 class="section-title">Start your infrastructure project</h2>
     <p class="contact-subtitle">Speak directly with our engineering team. Response within 12 hours.</p>
     <div class="contact-container">
       <div class="contact-group" data-country="nigeria">
         <button class="contact-header"><span>Nigeria</span> <i class="fas fa-chevron-down"></i></button>
-        <div class="contact-links">
-          <a href="https://wa.me/2348028354309" target="_blank" class="contact-btn whatsapp">WhatsApp</a>
-          <p class="trust-note">Secure, encrypted, direct line.</p>
-        </div>
+        <div class="contact-links"><a href="https://wa.me/2348028354309" target="_blank" class="contact-btn whatsapp">WhatsApp</a><p class="trust-note">Secure, encrypted, direct line.</p></div>
       </div>
       <div class="contact-group" data-country="usa">
         <button class="contact-header"><span>United States</span> <i class="fas fa-chevron-down"></i></button>
-        <div class="contact-links">
-          <a href="mailto:tullo.agency.usa@gmail.com" class="contact-btn email">Email</a>
-          <p class="trust-note">PGP available · enterprise ready.</p>
-        </div>
+        <div class="contact-links"><a href="mailto:tullo.agency.usa@gmail.com" class="contact-btn email">Email</a><p class="trust-note">PGP available · enterprise ready.</p></div>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <img src="./Assets/logo-white-nobg.png" alt="Tullo" class="footer-logo" id="footerLogo">
+    <img src="./Assets/logo-white-nobg.png" alt="Tullo" class="footer-logo">
     <div class="footer-icon">
       <a href="https://instagram.com/tulloagency"><i class="fa-brands fa-instagram"></i></a>
       <a href="https://tiktok.com/@tulloagency"><i class="fa-brands fa-tiktok"></i></a>
@@ -327,7 +474,126 @@
     <p class="footer-copy">© 2026 Tullo Agency · all rights reserved</p>
   </footer>
 
-  <!-- script embedded (full optimized JS) -->
-  <script src="./script.js">/* JS will be placed here in final output */</script>
+  <script>
+    (function() {
+      // theme
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('tullo-theme');
+      if (saved === 'light' || saved === 'dark') body.classList.add(`theme-${saved}`);
+      else body.classList.add(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light');
+      themeToggle.innerHTML = body.classList.contains('theme-dark') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('theme-dark')) {
+          body.classList.replace('theme-dark', 'theme-light');
+          localStorage.setItem('tullo-theme', 'light');
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+          body.classList.replace('theme-light', 'theme-dark');
+          localStorage.setItem('tullo-theme', 'dark');
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+      });
+
+      // header scroll
+      const header = document.querySelector('header');
+      window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+
+      // mobile menu
+      const mobileToggle = document.getElementById('mobileToggle');
+      const nav = document.getElementById('headerNav');
+      mobileToggle.addEventListener('click', () => nav.classList.toggle('mobile-open'));
+
+      // smooth navigation
+      document.querySelectorAll('.header-nav a, .header-cta, .hero-cta, .who-cta, .system-cta').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // dynamic island
+      const island = document.getElementById('dynamicIsland');
+      const label = document.getElementById('diLabel');
+      const icon = document.getElementById('diIcon');
+      let timeout;
+      function morph(text, iconClass) {
+        clearTimeout(timeout);
+        island.classList.remove('compress');
+        island.classList.add('expand');
+        label.textContent = text;
+        icon.className = iconClass + ' di-status';
+        timeout = setTimeout(() => {
+          island.classList.remove('expand');
+          island.classList.add('compress');
+          label.textContent = 'Tullo';
+          icon.className = 'fas fa-circle di-status';
+        }, 2000);
+      }
+      const sections = [
+        { id: 'heroSection', text: 'Infrastructure', icon: 'fas fa-cloud' },
+        { id: 'whoSection', text: 'Clients', icon: 'fas fa-users' },
+        { id: 'systemsSection', text: 'Systems', icon: 'fas fa-microchip' },
+        { id: 'processSection', text: 'Process', icon: 'fas fa-cogs' },
+        { id: 'pricingSection', text: 'Pricing', icon: 'fas fa-tag' },
+        { id: 'testimonialsSection', text: 'Trust', icon: 'fas fa-star' },
+        { id: 'contactSection', text: 'Contact', icon: 'fas fa-envelope' }
+      ];
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const match = sections.find(s => s.id === e.target.id);
+            if (match) morph(match.text, match.icon);
+          }
+        });
+      }, { threshold: 0.3 });
+      sections.forEach(s => { const el = document.getElementById(s.id); if (el) observer.observe(el); });
+
+      // 3D tilt + spotlight
+      const tiltContainers = document.querySelectorAll('.tilt-container');
+      const MAX = 9;
+      function updateTilt(e, c) {
+        const rect = c.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const px = Math.min(1, Math.max(0, x));
+        const py = Math.min(1, Math.max(0, y));
+        const img = c.querySelector('img, svg');
+        const spot = c.querySelector('.spotlight');
+        if (img) {
+          img.style.transition = 'none';
+          img.style.transform = `rotateX(${(0.5-py)*MAX*1.6}deg) rotateY(${(px-0.5)*MAX*1.6}deg)`;
+        }
+        if (spot) {
+          spot.style.left = (e.clientX - rect.left) + 'px';
+          spot.style.top = (e.clientY - rect.top) + 'px';
+        }
+      }
+      function resetTilt(c) {
+        const img = c.querySelector('img, svg');
+        const spot = c.querySelector('.spotlight');
+        if (img) { img.style.transition = 'transform 0.5s'; img.style.transform = ''; }
+        if (spot) { spot.style.left = '50%'; spot.style.top = '50%'; }
+      }
+      tiltContainers.forEach(c => {
+        c.addEventListener('mousemove', (e) => updateTilt(e, c));
+        c.addEventListener('mouseleave', () => resetTilt(c));
+      });
+
+      // contact accordion
+      document.querySelectorAll('.contact-header').forEach(h => {
+        h.addEventListener('click', () => {
+          const group = h.closest('.contact-group');
+          const open = group.classList.contains('open');
+          document.querySelectorAll('.contact-group').forEach(g => g.classList.remove('open'));
+          if (!open) group.classList.add('open');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
